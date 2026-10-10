@@ -71,7 +71,72 @@ $ arm-none-eabi-gdb      # Debugger
 - Place the code/data in the correct memory location
 - Set the program entry point
 - Optimize memory usage
-  
+
+```bash
+  main.o            uart.o            startup.o
++----------+      +----------+      +-------------+
+| .text    |      | .text    |      | .isr_vector |
+| .rodata  |      | .rodata  |      | .text       |
+| .data    |      | .data    |      |             |
+| .bss     |      | .bss     |      |             |
++----+-----+      +----+-----+      +------+------+
+     |                 |                   |
+     +-----------------+-------------------+
+                       |
+                       v
+              +-----------------+       +----------------+
+              |     LINKER      |<------| LINKER SCRIPT  |
+              |                 |       |                |
+              | merge sections  |       | MEMORY:        |
+              | assign addrs    |       |  FLASH, SRAM   |
+              | resolve symbols |       | SECTIONS:      |
+              | relocate        |       |  what goes where|
+              +--------+--------+       +----------------+
+                       |
+                       v
+                 firmware.elf
+                       |
+          +------------+------------+
+          v                         v
+   FLASH (0x0800_0000)       SRAM (0x2000_0000)
+  +------------------+      +------------------+
+  | .isr_vector      |      | .data (copied)   |
+  | .text            |      | .bss  (zeroed)   |
+  | .rodata          |      | heap  ↑          |
+  | .data (init vals)|----->| stack ↓          |
+  +------------------+ copy +------------------+
+                     at startup
+
+
+  CPU (M33)                                    FLASH (0x0800_0000)  [C-AHB]
++--------------+  0. reset: hardware loads  +----------------------+
+|              |<---------------------------| vector table         |
+|  SP (MSP)    |     SP and PC              |  [0] initial SP      |
+|  PC          |                            |  [1] Reset_Handler   |
+|              |                            |  [n] IRQ handlers    |
+|              |  1. PC = address           |                      |
+|              |--------------------------->| .text  (code)        |
+|  decode      |  2. instruction back       |                      |
+|  execute     |<---------------------------|                      |
+|              |  3. LDR const (read only)  | .rodata              |
+|  R0..R12     |<---------------------------| .data init values    |
+|              |                            +----------------------+
+|              |
+|              |  4. startup copy (once, before main):
+|              |     CPU runs Reset_Handler code:
+|              |     LDR from flash init values -> STR to SRAM .data
+|              |     STR zeros to .bss
+|              |
+|              |  5. LDR / STR data          SRAM (0x2000_0000)  [S-AHB]
+|              |<--------------------------->+---------------------+
+|              |  6. PUSH / POP (via SP)     | .data  (variables)  |
+|              |<--------------------------->| .bss   (zeroed)     |
+|              |                             | heap   (grows up)   |
++--------------+                             |   ...free gap...    |
+                                             | stack  (grows down) |
+                                             +---------------------+ _estack
+```
+
 Reference: https://sourceware.org/binutils/docs/ld/Scripts.html
 
 #### Concept

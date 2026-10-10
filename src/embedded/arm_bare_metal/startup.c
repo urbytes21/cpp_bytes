@@ -47,7 +47,7 @@ __attribute__((section(".isr_vector"))) const void* vector_table[] = {
     SysTick_Handler,
 };
 
-/// @brief Executed immediately after reset.
+/// @brief Executed immediately after reset
 /// Responsible for initializing the C runtime environment
 void Reset_Handler(void) {
   // Copy initialized data (.data) * from Flash to RAM.
