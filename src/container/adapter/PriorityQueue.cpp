@@ -1,80 +1,56 @@
 // -----------------------------------------------------------------------------
-// std::priority_queue - always pop the "largest" element first
+// std::priority_queue - highest priority element first
 //
-//   template<class T, class Container = std::vector<T>,
-//            class Compare = std::less<typename Container::value_type>>
-//   class priority_queue;
-//
-// A container ADAPTER implemented as a binary heap on top of std::vector:
-// push() and pop() are O(log n), top() is O(1).
-//
-//   - Default (std::less)  : max-heap, top() is the largest element.
-//   - std::greater<T>      : min-heap, top() is the smallest element.
-//   - Custom comparator    : "a < b" means a has LOWER priority than b.
+//   - Access: top(); add with push() / emplace(); remove with pop().
+//   - Default: largest first; std::greater<int> makes smallest first.
+//   - Size: size() / empty(); no iterators or indexing.
+//   - Check empty() before top() or pop(); traversal requires popping.
 //
 // Reference: https://en.cppreference.com/w/cpp/container/priority_queue
 // -----------------------------------------------------------------------------
 
 #include <functional>
 #include <queue>
-#include <string>
 #include <vector>
 
 #include "lab/Example.h"
 #include "lab/Logger.h"
 
-namespace {
+LAB_EXAMPLE("PriorityQueue", "std::priority_queue: push, top, pop, max-heap, min-heap") {
+  std::priority_queue<int> values;
 
-void maxAndMinHeap() {
-  LOG_SECTION("Max-heap and min-heap");
-  const std::vector<int> values{5, 1, 8, 3, 9, 2};
+  LOG_SECTION("Push and emplace (max-heap)");
+  values.push(3);
+  values.push(1);
+  values.emplace(5);
+  LOG_S("size = " << values.size() << ", top = " << values.top());
 
-  std::priority_queue<int> max_heap(values.begin(), values.end());
-  std::priority_queue<int, std::vector<int>, std::greater<>> min_heap(
-      values.begin(), values.end());
+  LOG_SECTION("Pop");
+  values.pop();  // removes 5; returns no value
+  LOG_S("after pop: top = " << values.top());
 
-  std::string max_order;
-  std::string min_order;
-  while (!max_heap.empty()) {
-    max_order += std::to_string(max_heap.top()) + " ";
-    max_heap.pop();
-    min_order += std::to_string(min_heap.top()) + " ";
-    min_heap.pop();
+  LOG_SECTION("Traverse a copy by popping");
+  auto copy = values;
+  while (!copy.empty()) {
+    LOG_S(copy.top());  // largest to smallest
+    copy.pop();
   }
-  LOG_S("max-heap pops: " << max_order);
-  LOG_S("min-heap pops: " << min_order);
-}
+  LOG_S("original size = " << values.size());
 
-struct Task {
-  std::string name;
-  int priority;
-};
-
-void customComparator() {
-  LOG_SECTION("Custom comparator: a task scheduler");
-
-  // Returns true when `a` should be served AFTER `b`.
-  auto lower_priority = [](const Task& a, const Task& b) {
-    return a.priority < b.priority;
-  };
-  std::priority_queue<Task, std::vector<Task>, decltype(lower_priority)> tasks(
-      lower_priority);
-
-  tasks.push({"write docs", 1});
-  tasks.push({"fix crash", 10});
-  tasks.push({"code review", 5});
-
-  while (!tasks.empty()) {
-    LOG_S("serve '" << tasks.top().name << "' (priority "
-                    << tasks.top().priority << ")");
-    tasks.pop();
+  LOG_SECTION("Drain the original");
+  while (!values.empty()) {
+    LOG_S(values.top());
+    values.pop();
   }
-}
+  LOG_S("empty = " << values.empty());
 
-}  // namespace
-
-LAB_EXAMPLE("PriorityQueue",
-            "std::priority_queue: max-heap, min-heap, custom priority") {
-  maxAndMinHeap();
-  customComparator();
+  LOG_SECTION("Min-heap");
+  std::priority_queue<int, std::vector<int>, std::greater<int>> smallest_first;
+  smallest_first.push(3);
+  smallest_first.push(1);
+  smallest_first.emplace(5);
+  while (!smallest_first.empty()) {
+    LOG_S(smallest_first.top());  // 1, 3, 5
+    smallest_first.pop();
+  }
 }

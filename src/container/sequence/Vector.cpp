@@ -1,126 +1,77 @@
 // -----------------------------------------------------------------------------
-// std::vector - dynamic contiguous array (the default container)
+// std::vector - dynamic contiguous elements
 //
-//   - size() is the number of elements, capacity() the allocated room.
-//   - When size would exceed capacity, the vector allocates a bigger buffer
-//     and moves every element into it.
-//   - reserve() allocates up front when the final size is known.
-//   - Reallocation invalidates ALL pointers, references and iterators.
-//   - emplace_back constructs in place; push_back copies/moves an object.
-//   - C++20 std::erase / std::erase_if replace the erase-remove idiom.
+//   - Access: operator[] / at() / front() / back() / data().
+//   - Insert: push_back() / emplace_back() / insert() / emplace().
+//   - Remove: pop_back() / erase() / std::erase() / clear().
+//   - Capacity: reserve() allocates room; resize() changes the number of elements.
+//   - Reallocation invalidates all iterators, pointers and references.
 //
 // Reference: https://en.cppreference.com/w/cpp/container/vector
 // -----------------------------------------------------------------------------
 
-#include <cstdint>
-#include <string>
-#include <utility>
+#include <algorithm>
 #include <vector>
 
 #include "lab/Example.h"
 #include "lab/Logger.h"
 
-namespace {
+LAB_EXAMPLE("Vector", "std::vector: access, capacity, insert, traverse, erase") {
+  std::vector<int> values{1, 2, 3};
 
-template <typename T>
-std::string join(const std::vector<T>& vector) {
-  std::string text;
-  for (const T& element : vector) {
-    text += std::to_string(element) + " ";
-  }
-  return text;
-}
+  LOG_SECTION("Size and capacity");
+  values.reserve(10);  // does not change size
+  LOG_S("size = " << values.size() << ", capacity = " << values.capacity());
+  values.resize(5, 0);  // appends two zeros
+  LOG_S("after resize(5): size = " << values.size() << ", back = " << values.back());
 
-void initialization() {
-  LOG_SECTION("Initialization");
-  const std::vector<int> listed{9, 100, 0};  // initializer list
-  const std::vector<int> repeated(3, 7);     // 3 elements with value 7
-  const std::vector<int> empty;
-  std::vector<int> assigned;
-  assigned = {1, 2, 3, 5, 6};  // unlike std::array the size can change
-  // std::vector<int> oops();  // most vexing parse: declares a function!
+  LOG_SECTION("Access and update");
+  values[0] = 10;
+  values.at(1) = 20;  // throws if the index is out of range
+  LOG_S("front = " << values.front() << ", back = " << values.back());
+  LOG_S("data()[1] = " << values.data()[1]);
 
-  LOG_S("listed{9, 100, 0} -> " << join(listed));
-  LOG_S("repeated(3, 7)    -> " << join(repeated));
-  LOG_S("empty.size()      =  " << empty.size());
-  LOG_S("assigned          -> " << join(assigned));
-}
+  LOG_SECTION("Insert");
+  values.push_back(4);
+  values.emplace_back(5);
+  values.insert(values.begin(), 0);  // inserts before the iterator
+  values.emplace(values.begin() + 1, 9);
 
-void growth() {
-  LOG_SECTION("size() vs capacity()");
-  std::vector<int> numbers;
-  std::size_t last_capacity = numbers.capacity();
-  for (int i = 0; i < 20; ++i) {
-    numbers.push_back(i);
-    if (numbers.capacity() != last_capacity) {
-      LOG_S("size " << numbers.size() << ": reallocated, capacity "
-                    << last_capacity << " -> " << numbers.capacity());
-      last_capacity = numbers.capacity();
-    }
+  LOG_SECTION("Index loop");
+  for (std::size_t i = 0; i < values.size(); ++i) {
+    LOG_S("[" << i << "] = " << values[i]);
   }
 
-  std::vector<int> reserved;
-  reserved.reserve(20);  // one allocation, no reallocation below
-  const auto before = reinterpret_cast<std::uintptr_t>(reserved.data());
-  for (int i = 0; i < 20; ++i) {
-    reserved.push_back(i);
+  LOG_SECTION("Range-based loop");
+  for (const auto& value : values) {
+    LOG_S(value);
   }
-  LOG_S("with reserve(20): buffer unchanged = "
-        << std::boolalpha
-        << (before == reinterpret_cast<std::uintptr_t>(reserved.data())));
 
-  numbers.shrink_to_fit();  // non-binding request to release unused capacity
-  LOG_S("after shrink_to_fit: size " << numbers.size() << ", capacity "
-                                     << numbers.capacity());
-}
+  LOG_SECTION("Iterators: begin / end");
+  for (auto it = values.begin(); it != values.end(); ++it) {
+    LOG_S(*it);
+  }
 
-void modifiers() {
-  LOG_SECTION("Modifiers");
-  std::vector<int> numbers{1, 2, 3};
+  LOG_SECTION("Const iterators: cbegin / cend");
+  for (auto it = values.cbegin(); it != values.cend(); ++it) {
+    LOG_S(*it);
+  }
 
-  numbers.insert(numbers.begin(), 0);  // O(n): shifts every element
-  numbers.push_back(4);
-  numbers.emplace_back(5);
-  LOG_S("insert front, push_back, emplace_back -> " << join(numbers));
+  LOG_SECTION("Reverse iterators: rbegin / rend");
+  for (auto it = values.rbegin(); it != values.rend(); ++it) {
+    LOG_S(*it);
+  }
 
-  numbers.erase(numbers.begin() + 2);  // removes the element at index 2
-  numbers.pop_back();
-  LOG_S("erase index 2, pop_back              -> " << join(numbers));
+  LOG_SECTION("std::for_each");
+  std::for_each(values.cbegin(), values.cend(), [](const auto& entry) {
+    LOG_S(entry);
+  });
 
-  std::vector<int> mixed{1, 2, 3, 4, 5, 6, 7, 8};
-  std::erase_if(mixed, [](int value) { return value % 2 == 0; });  // C++20
-  LOG_S("std::erase_if(even)                  -> " << join(mixed));
-
-  std::vector<std::pair<std::string, int>> people;
-  people.emplace_back("Alice",
-                      30);  // pair constructed directly inside the vector
-  LOG_S("emplace_back(\"Alice\", 30) -> " << people.front().first << ", "
-                                          << people.front().second);
-}
-
-void invalidation() {
-  LOG_SECTION("Iterator invalidation");
-  std::vector<int> numbers{1, 2, 3};
-  numbers.shrink_to_fit();
-  // Kept as an integer: after the reallocation the old POINTER value must not
-  // be used any more, not even for a comparison.
-  const auto old_address = reinterpret_cast<std::uintptr_t>(numbers.data());
-
-  numbers.push_back(4);  // capacity was full -> reallocation
-  LOG_S("buffer moved after push_back: "
-        << std::boolalpha
-        << (old_address != reinterpret_cast<std::uintptr_t>(numbers.data())));
-  LOG("Any pointer, reference or iterator taken before is now dangling.");
-  LOG("Take new ones after modifying, or reserve() enough capacity first.");
-}
-
-}  // namespace
-
-LAB_EXAMPLE(
-    "Vector",
-    "std::vector: growth and capacity, modifiers, erase_if, invalidation") {
-  initialization();
-  growth();
-  modifiers();
-  invalidation();
+  LOG_SECTION("Remove");
+  values.pop_back();
+  values.erase(values.begin());  // erase by position
+  std::erase(values, 0);  // C++20: erase all zeros
+  LOG_S("size = " << values.size() << ", front = " << values.front());
+  values.clear();
+  LOG_S("empty = " << values.empty() << ", capacity = " << values.capacity());
 }

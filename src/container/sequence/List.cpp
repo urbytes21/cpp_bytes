@@ -1,89 +1,84 @@
 // -----------------------------------------------------------------------------
-// std::list (C++98) - doubly linked list
+// std::list - doubly linked elements
+//
+//   - Access: front() / back(); no indexing or data()
+//   - Insert: push_front() / push_back() / emplace() / insert() before an iterator
+//   - Remove: pop_front() / pop_back() / erase() / remove() / remove_if()
+//   - Reorder: sort() / unique() / reverse(); transfer nodes with splice() / merge()
+//
+// Reference: https://en.cppreference.com/w/cpp/container/list
 // -----------------------------------------------------------------------------
+
+#include <algorithm>
+#include <iterator>
+#include <list>
 
 #include "lab/Example.h"
 #include "lab/Logger.h"
 
-#include <iterator>
-#include <list>
-#include <string>
-#include <string_view>
+LAB_EXAMPLE("List", "std::list: insert, traverse, erase, reorder, transfer") {
+  std::list<int> values{1, 2, 3};
 
-namespace {
+  LOG_SECTION("Insert and access");
+  values.push_front(0);
+  values.push_back(4);
+  values.emplace_front(-1);
+  values.emplace_back(5);
+  auto inserted = values.insert(std::next(values.begin()), 9);
+  values.emplace(inserted, 8);
+  LOG_S("front = " << values.front() << ", back = " << values.back());
+  LOG_S("size = " << values.size());
 
-using List = std::list<std::string_view>;
-
-// Takes the list by const reference (no copy) and logs it as one line.
-void print_out(std::string_view title, const List& l) {
-  std::string line{title};
-  line += ":";
-  for (const auto& n : l) {
-    line += ' ';
-    line += n;
+  LOG_SECTION("Range-based loop");
+  for (const auto& value : values) {
+    LOG_S(value);
   }
-  LOG(line);
-}
 
-void outline() {
-  List l{"1", "2", "3"};
-  print_out("initial", l);
+  LOG_SECTION("Iterators: begin / end");
+  for (auto it = values.begin(); it != values.end(); ++it) {
+    LOG_S(*it);
+  }
 
-  // O(1) insertion at both ends
-  l.emplace_front("0");
-  print_out("emplace_front(0)", l);
+  LOG_SECTION("Const iterators: cbegin / cend");
+  for (auto it = values.cbegin(); it != values.cend(); ++it) {
+    LOG_S(*it);
+  }
 
-  l.emplace_back("4");
-  print_out("emplace_back(4)", l);
+  LOG_SECTION("Reverse iterators: rbegin / rend");
+  for (auto it = values.rbegin(); it != values.rend(); ++it) {
+    LOG_S(*it);
+  }
 
-  // Doubly linked: insert goes *before* the iterator, no "after" variants
-  auto it = std::next(l.begin(), 2);  // -> "2"
-  it = l.insert(it, "x");             // inserts before "2", returns new element
-  print_out("insert(before 2, x)", l);
+  LOG_SECTION("std::for_each");
+  std::for_each(values.cbegin(), values.cend(), [](const auto& entry) {
+    LOG_S(entry);
+  });
 
-  // Iterators stay valid after insert/erase of other elements
-  it = l.erase(it);          // erases "x", returns the next element
-  print_out("erase(x)", l);  // `it` now points to "2"
+  LOG_SECTION("Remove");
+  values.erase(inserted);  // other iterators remain valid
+  values.pop_front();
+  values.pop_back();
+  values.remove(2);  // removes all elements equal to 2
+  values.remove_if([](int value) { return value == 8; });
+  LOG_S("size = " << values.size());
 
-  l.pop_front();
-  l.pop_back();
-  print_out("pop_front + pop_back", l);
+  LOG_SECTION("Sort, unique, reverse");
+  values.assign({3, 1, 2, 2});
+  values.sort();  // list uses its member sort(), not std::sort
+  values.unique();  // removes consecutive duplicates
+  values.reverse();
+  for (int value : values) {
+    LOG_S(value);  // 3, 2, 1
+  }
 
-  // Remove by value / by predicate
-  l.remove("2");
-  print_out("remove(2)", l);
-
-  l.assign({"c", "a", "b", "a"});
-  print_out("assign", l);
-
-  // Whole-list algorithms are members (no random access, so std::sort
-  // cannot be used)
-  l.sort();
-  print_out("sort()", l);
-
-  l.unique();  // removes consecutive duplicates
-  print_out("unique()", l);
-
-  l.reverse();
-  print_out("reverse()", l);
-
-  // splice moves nodes between lists without copying
-  List other{"y", "z"};
-  l.splice(l.begin(), other);
-  print_out("splice(begin, other)", l);
-  print_out("other (now empty)", other);
-
-  // merge combines two *sorted* lists into one sorted list
-  List a{"1", "3", "5"};
-  List b{"2", "4"};
-  a.merge(b);
-  print_out("merge", a);
-}
-
-}  // namespace
-
-LAB_EXAMPLE("List",
-            "std::list: a doubly linked list with O(1) insert/erase anywhere, "
-            "splice and merge") {
-  outline();
+  LOG_SECTION("Transfer nodes");
+  std::list<int> other{4, 5};
+  values.splice(values.end(), other);  // moves all nodes from other
+  LOG_S("after splice: size = " << values.size() << ", other.empty = " << other.empty());
+  values.sort();
+  other.assign({0, 6});
+  values.merge(other);  // both lists must be sorted
+  LOG_S("after merge: size = " << values.size() << ", other.empty = " << other.empty());
+  values.clear();
+  LOG_S("empty = " << values.empty());
 }

@@ -1,52 +1,87 @@
 // -----------------------------------------------------------------------------
-// std::map (C++98/C++17)
+// std::map - sorted unique keys with mapped values
 //
-// DRAFT - a scaffold, not a finished example: it says what this topic should
-// show, but the code is not written yet. Replace outline() with real
-// demonstrations and drop `lab::kDraft` from LAB_EXAMPLE at the bottom.
-//
-// Planned content:
-//   - operator[] default-constructs a missing value - at() throws instead
-//   - insert vs insert_or_assign vs emplace vs try_emplace (C++17)
-//   - structured bindings over the pairs, and extract/merge (C++17)
-//   - lower_bound / upper_bound / equal_range on sorted keys
-//   - a custom comparator, and heterogeneous lookup with is_transparent
+//   - Look up: find() / contains() / at(); operator[] inserts a default if missing.
+//   - Insert: insert() / emplace() / try_emplace() keep an existing value.
+//   - Insert or update: insert_or_assign() / map[key] = value.
+//   - Ranges: lower_bound() (>= key) / upper_bound() (> key) / equal_range().
 //
 // Reference: https://en.cppreference.com/w/cpp/container/map
 // -----------------------------------------------------------------------------
 
-#include <array>
-#include <string_view>
+#include <algorithm>
+#include <map>
+#include <string>
 
 #include "lab/Example.h"
 #include "lab/Logger.h"
 
-namespace {
+LAB_EXAMPLE("Map", "std::map: insert, update, lookup, sorted traversal, erase") {
+  std::map<std::string, int> inventory{{"banana", 2}, {"apple", 5}};
 
-// The same list as in the header comment, so that running the draft shows what
-// is still missing.
-constexpr std::array<std::string_view, 5> kPlanned{
-    "operator[] default-constructs a missing value - at() throws instead",
-    "insert vs insert_or_assign vs emplace vs try_emplace (C++17)",
-    "structured bindings over the pairs, and extract/merge (C++17)",
-    "lower_bound / upper_bound / equal_range on sorted keys",
-    "a custom comparator, and heterogeneous lookup with is_transparent",
-};
+  LOG_SECTION("Insert");
+  inventory.insert({"cherry", 7});
+  inventory.emplace("date", 1);
+  inventory.try_emplace("apple", 100);  // keeps the existing 5
+  LOG_S("apple = " << inventory.at("apple"));
 
-void outline() {
-  LOG_SECTION("std::map (C++98/C++17) - planned content");
-  for (const std::string_view point : kPlanned) {
-    LOG_S("  - " << point);
+  LOG_SECTION("Insert or update");
+  inventory.insert_or_assign("apple", 10);
+  inventory["banana"] = 4;
+  inventory["kiwi"] = 3;
+
+  LOG_SECTION("Look up");
+  if (const auto it = inventory.find("apple"); it != inventory.end()) {
+    LOG_S("found apple: " << it->second);
   }
-  LOG("");
-  LOG("This example is still a draft. Write it, then remove lab::kDraft.");
-}
+  LOG_S("contains mango = " << inventory.contains("mango"));
+  LOG_S("at cherry = " << inventory.at("cherry"));  // throws if missing
+  LOG_S("operator[] mango = " << inventory["mango"]);  // inserts 0
 
-}  // namespace
+  LOG_SECTION("Range-based loop: entries (sorted by key)");
+  for (const auto& entry : inventory) {
+    LOG_S(entry.first << ": " << entry.second);
+  }
 
-LAB_EXAMPLE("Map",
-            "std::map: sorted keys, operator[] vs at vs insert vs try_emplace, "
-            "lower_bound, custom comparator",
-            lab::kDraft) {
-  outline();
+  LOG_SECTION("Range-based loop: structured bindings");
+  for (const auto& [key, value] : inventory) {
+    LOG_S(key << ": " << value);
+  }
+
+  LOG_SECTION("Iterators: begin / end");
+  for (auto it = inventory.begin(); it != inventory.end(); ++it) {
+    LOG_S(it->first << ": " << it->second);
+  }
+
+  LOG_SECTION("Const iterators: cbegin / cend");
+  for (auto it = inventory.cbegin(); it != inventory.cend(); ++it) {
+    LOG_S(it->first << ": " << it->second);
+  }
+
+  LOG_SECTION("Reverse iterators: rbegin / rend");
+  for (auto it = inventory.rbegin(); it != inventory.rend(); ++it) {
+    LOG_S(it->first << ": " << it->second);
+  }
+
+  LOG_SECTION("std::for_each");
+  std::for_each(inventory.cbegin(), inventory.cend(), [](const auto& entry) {
+    LOG_S(entry.first << ": " << entry.second);
+  });
+
+  LOG_SECTION("Key range: banana through date");
+  const auto last = inventory.upper_bound("date");
+  for (auto it = inventory.lower_bound("banana"); it != last; ++it) {
+    LOG_S(it->first << ": " << it->second);
+  }
+  const auto [first, end] = inventory.equal_range("apple");
+  for (auto it = first; it != end; ++it) {
+    LOG_S("equal_range apple: " << it->second);
+  }
+
+  LOG_SECTION("Erase");
+  inventory.erase("banana");
+  LOG_S("contains banana = " << inventory.contains("banana"));
+  LOG_S("size = " << inventory.size());
+  inventory.clear();
+  LOG_S("empty = " << inventory.empty());
 }

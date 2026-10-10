@@ -1,68 +1,71 @@
 // -----------------------------------------------------------------------------
-// std::deque - double-ended queue
+// std::deque - indexed elements with insertion at both ends
 //
-//   - O(1) insertion and removal at BOTH ends, O(1) random access.
-//   - Elements live in fixed-size blocks, not in one contiguous buffer: there
-//     is no data(), and indexing is a little slower than std::vector.
-//   - push_front / push_back never move existing elements, so references and
-//     pointers to them stay valid (iterators do not).
-//   - Insertion or removal in the middle is O(n).
+//   - Access: operator[] / at() / front() / back(); no data().
+//   - Insert: push_front() / push_back() / emplace_front() / emplace_back() / insert().
+//   - Remove: pop_front() / pop_back() / erase() / clear().
+//   - Pushing at either end keeps references valid, but invalidates iterators.
 //
 // Reference: https://en.cppreference.com/w/cpp/container/deque
 // -----------------------------------------------------------------------------
 
+#include <algorithm>
 #include <deque>
-#include <string>
 
 #include "lab/Example.h"
 #include "lab/Logger.h"
 
-namespace {
+LAB_EXAMPLE("Deque", "std::deque: access, both ends, traverse, erase") {
+  std::deque<int> values{1, 2, 3};
 
-std::string join(const std::deque<int>& deque) {
-  std::string text;
-  for (const int element : deque) {
-    text += std::to_string(element) + " ";
+  LOG_SECTION("Insert at both ends and in the middle");
+  values.push_front(0);
+  values.push_back(4);
+  values.emplace_front(-1);
+  values.emplace_back(5);
+  values.insert(values.begin() + 2, 9);
+
+  LOG_SECTION("Access and update");
+  values[2] = 10;
+  values.at(3) = 20;
+  LOG_S("front = " << values.front() << ", back = " << values.back());
+  LOG_S("size = " << values.size());
+
+  LOG_SECTION("Index loop");
+  for (std::size_t i = 0; i < values.size(); ++i) {
+    LOG_S("[" << i << "] = " << values[i]);
   }
-  return text;
-}
 
-void bothEnds() {
-  LOG_SECTION("Adding and removing at both ends");
-  std::deque<int> deque{1, 2, 3};
-  LOG_S("start          : " << join(deque));
-
-  deque.push_front(0);
-  deque.push_back(4);
-  LOG_S("push_front(0), push_back(4): " << join(deque));
-
-  deque.pop_front();
-  deque.pop_back();
-  LOG_S("pop_front(), pop_back()    : " << join(deque));
-
-  deque.insert(deque.begin() + 1, 99);  // O(n) in the middle
-  LOG_S("insert at index 1          : " << join(deque));
-  LOG_S("random access deque[2]     = " << deque[2]);
-}
-
-void referenceStability() {
-  LOG_SECTION("References survive push_back / push_front");
-  std::deque<int> deque{42};
-  const int& first = deque.front();
-
-  for (int i = 0; i < 10'000; ++i) {
-    deque.push_back(i);
-    deque.push_front(-i);
+  LOG_SECTION("Range-based loop");
+  for (const auto& value : values) {
+    LOG_S(value);
   }
-  // With std::vector, growing would reallocate and `first` would dangle.
-  LOG_S("after 20000 insertions, `first` still reads "
-        << first << ", size = " << deque.size());
-}
 
-}  // namespace
+  LOG_SECTION("Iterators: begin / end");
+  for (auto it = values.begin(); it != values.end(); ++it) {
+    LOG_S(*it);
+  }
 
-LAB_EXAMPLE("Deque",
-            "std::deque: fast insertion at both ends, stable references") {
-  bothEnds();
-  referenceStability();
+  LOG_SECTION("Const iterators: cbegin / cend");
+  for (auto it = values.cbegin(); it != values.cend(); ++it) {
+    LOG_S(*it);
+  }
+
+  LOG_SECTION("Reverse iterators: rbegin / rend");
+  for (auto it = values.rbegin(); it != values.rend(); ++it) {
+    LOG_S(*it);
+  }
+
+  LOG_SECTION("std::for_each");
+  std::for_each(values.cbegin(), values.cend(), [](const auto& entry) {
+    LOG_S(entry);
+  });
+
+  LOG_SECTION("Remove");
+  values.pop_front();
+  values.pop_back();
+  values.erase(values.begin() + 1);
+  LOG_S("front = " << values.front() << ", back = " << values.back());
+  values.clear();
+  LOG_S("empty = " << values.empty());
 }
