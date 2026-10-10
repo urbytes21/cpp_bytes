@@ -1,4 +1,5 @@
 #include "Tower.hpp"
+
 #include <optional>
 
 #include "lab/Logger.h"

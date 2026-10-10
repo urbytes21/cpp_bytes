@@ -4,10 +4,11 @@
 #include <string>
 #include <vector>
 
+#include "observer/Event.hpp"
+
 namespace dp::observer {
 
 class Listener;
-enum class Event;
 
 /// Subject
 class Button {

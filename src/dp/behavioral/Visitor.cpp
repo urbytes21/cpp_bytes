@@ -1,18 +1,22 @@
 #include <memory>
+#include <variant>
 #include <vector>
 
 #include "visitor/Counter.hpp"
 #include "visitor/Element.hpp"
+#include "visitor/VariantElement.hpp"
 #include "visitor/Visitor.hpp"
 #include "visitor/VisitorFactory.hpp"
 
 #include "lab/Example.h"
 #include "lab/Logger.h"
 
-using namespace dp::visitor;
+namespace {
 
-LAB_EXAMPLE("Visitor", "add operations without changing element classes") {
+void classic() {
+  using namespace dp::visitor;
 
+  LOG_SECTION("Building a document of Paragraph, Image and Table elements");
   std::vector<std::unique_ptr<Element>> document;
   document.push_back(
       std::make_unique<Paragraph>("Visitor separates data from behavior."));
@@ -38,6 +42,30 @@ LAB_EXAMPLE("Visitor", "add operations without changing element classes") {
   LOG_SECTION("Word count (a visitor that collects data)");
   auto counter = make_word_counter();
   apply(*counter);
+  LOG_S("    words in paragraphs: " << counter->count());
+}
 
-  LOG_S("words in paragraphs: " << counter->count());
+void with_variant() {
+  using namespace dp::visitor::with_variant;
+
+  LOG_SECTION("Modern alternative: std::variant + std::visit");
+  const std::vector<Element> document{Paragraph{"no base classes needed"},
+                                      Image{"photo.jpg"}};
+  for (const Element& element : document) {
+    std::visit(
+        Overloaded{
+            [](const Paragraph& p) { LOG_S("    paragraph: " << p.text); },
+            [](const Image& i) { LOG_S("    image: " << i.path); },
+        },
+        element);
+  }
+}
+
+}  // namespace
+
+LAB_EXAMPLE("Visitor",
+            "add operations without changing element classes; std::variant "
+            "alternative") {
+  classic();
+  with_variant();
 }

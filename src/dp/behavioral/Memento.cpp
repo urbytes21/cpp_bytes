@@ -8,7 +8,6 @@ using namespace dp::memento;
 
 LAB_EXAMPLE("Memento",
             "save and restore state (undo) without breaking encapsulation") {
-
   Editor editor;
   History history{editor};
 

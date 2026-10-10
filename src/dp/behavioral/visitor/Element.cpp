@@ -1,7 +1,8 @@
 #include "visitor/Element.hpp"
-#include "visitor/Visitor.hpp"
 
 #include <utility>
+
+#include "visitor/Visitor.hpp"
 
 namespace dp::visitor {
 

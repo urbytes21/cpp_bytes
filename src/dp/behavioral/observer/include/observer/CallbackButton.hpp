@@ -4,8 +4,9 @@
 #include <utility>
 #include <vector>
 
+#include "observer/Event.hpp"
+
 namespace dp::observer {
-enum class Event;
 
 /// A lighter alternative: observers are std::function callbacks.
 class CallbackButton {

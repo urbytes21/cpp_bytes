@@ -1,9 +1,8 @@
 #include "observer/Button.hpp"
-#include "observer/Event.hpp"
-#include "observer/Listener.hpp"
 
 #include <utility>
-#include <vector>
+
+#include "observer/Listener.hpp"
 
 #include "lab/Logger.h"
 

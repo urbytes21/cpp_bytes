@@ -3,7 +3,6 @@
 #include <string>
 
 #include "observer/Listener.hpp"
-#include "observer/Event.hpp"
 
 namespace dp::observer {
 

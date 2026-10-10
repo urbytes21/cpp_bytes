@@ -52,7 +52,6 @@ void callback() {
 LAB_EXAMPLE(
     "Observer",
     "publish/subscribe with listener interfaces or std::function callbacks") {
-
   classic();
   callback();
 }

@@ -1,5 +1,4 @@
 #include "SoundListener.hpp"
-#include "observer/Event.hpp"
 
 #include "lab/Logger.h"
 

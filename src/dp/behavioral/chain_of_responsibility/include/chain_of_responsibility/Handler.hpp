@@ -11,7 +11,7 @@ class Handler {
  public:
   virtual ~Handler() = default;
 
-  /// Returns `next` so a chain can be written as a.setNext(b).setNext(c).
+  /// Returns `next` so a chain can be written as a.set_next(b).set_next(c).
   Handler& set_next(Handler& next);
 
   virtual void handle(const Request& request) const;

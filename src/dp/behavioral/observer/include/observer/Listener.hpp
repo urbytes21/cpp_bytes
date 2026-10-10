@@ -2,9 +2,9 @@
 
 #include <string>
 
-namespace dp::observer {
+#include "observer/Event.hpp"
 
-enum class Event;
+namespace dp::observer {
 
 /// Observer interface.
 class Listener {
