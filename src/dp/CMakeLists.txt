@@ -14,6 +14,12 @@ add_library(cpplab_dp
 
 add_library(cpplab::dp ALIAS cpplab_dp)
 
+add_subdirectory(behavioral/state)
+add_subdirectory(behavioral/strategy)
+
 target_link_libraries(cpplab_dp
-	PRIVATE cpplab::lab
+	PRIVATE
+		cpplab::lab
+		dp::state
+		dp::strategy
 )
