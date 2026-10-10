@@ -1,37 +1,33 @@
-# ----------------------------------------------------------------------------------------
-# lab framework (registry, logger, menu, command line)
-# ----------------------------------------------------------------------------------------
+string(TIMESTAMP PROJECT_BUILD_TIME "%Y-%m-%d %H:%M:%S")
+configure_file(
+    ${CMAKE_CURRENT_SOURCE_DIR}/version.h.in
+    ${PROJECT_BINARY_DIR}/generated/version.hpp
+    @ONLY
+)
+
 add_subdirectory(lab)
+# add_subdirectory(core)        # C++ language and standard library
+# add_subdirectory(dp)          # design patterns
+# add_subdirectory(socket)      # POSIX TCP sockets
 
-# ----------------------------------------------------------------------------------------
-# Example modules
-# Every .cpp below these folders is compiled into the menu application. To add an example,
-# create a file with LAB_EXAMPLE(...) in the right folder - no CMake change is required.
-# To add a new top-level topic, create the folder and add one line here.
-# ----------------------------------------------------------------------------------------
-set(CPPLAB_EXAMPLE_TARGETS)
-cpplab_add_example_module(core)        # C++ language and standard library
-cpplab_add_example_module(controller)  # control algorithms (PID)
-cpplab_add_example_module(dp)          # design patterns
-cpplab_add_example_module(socket)      # POSIX TCP sockets
-
-# ----------------------------------------------------------------------------------------
-# Main application target
-# ----------------------------------------------------------------------------------------
 add_executable(${PROJECT_NAME} main.cpp)
+
 target_link_libraries(${PROJECT_NAME}
     PRIVATE
         cpplab::lab
-        ${CPPLAB_EXAMPLE_TARGETS}
+        # cpplab::core
+        # cpplab::dp
+        # cpplab::socket
+)
+
+target_include_directories(${PROJECT_NAME}
+    PRIVATE ${PROJECT_BINARY_DIR}/generated
 )
 
 if(CPPLAB_BUILD_TESTS)
     cpplab_discover_example_tests(${PROJECT_NAME})
 endif()
 
-# ----------------------------------------------------------------------------------------
-# Standalone programs
-# ----------------------------------------------------------------------------------------
 if(CPPLAB_GUI_ENABLED)
     add_subdirectory(ap)     # MVC / MVVM with GTK4 (separate executables)
 endif()

@@ -1,4 +1,5 @@
 #include "lab/Menu.h"
+#include "lab/Runner.h"
 
 #include <algorithm>
 #include <cctype>
@@ -8,7 +9,6 @@
 #include <string>
 #include <vector>
 
-#include "lab/Runner.h"
 
 namespace lab {
 namespace {

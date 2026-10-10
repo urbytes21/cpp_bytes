@@ -1,9 +1,3 @@
-// Entry point of the cpp-lab application.
-//
-// Every example registers itself with LAB_EXAMPLE before main() starts, so
-// main() only has to parse the command line and hand the registry to the menu
-// or to the runner.
-
 #include <algorithm>
 #include <iomanip>
 #include <iostream>
@@ -16,10 +10,9 @@
 #include "lab/Menu.h"
 #include "lab/Registry.h"
 #include "lab/Runner.h"
-#include "lab/version.h"
+#include "version.hpp"
 
 namespace {
-
 std::string cppStandard() {
   switch (__cplusplus) {
     case 202302L:
@@ -97,7 +90,7 @@ int runOne(const lab::Registry& registry, const std::string& query) {
 
 int main(int argc, char* argv[]) {
   const std::vector<std::string_view> args(argv + 1, argv + argc);
-  const std::string_view program = argc > 0 ? argv[0] : "cpp_lab_project";
+  const std::string_view program = argv[0];
 
   const lab::ParseResult parsed = lab::parseCommandLine(args);
   if (!parsed.value) {
@@ -145,6 +138,6 @@ int main(int argc, char* argv[]) {
             << "examples : " << registry.examples().size()
             << "  (run with --help for command-line usage)\n";
   lab::runMenu(registry, std::cin, std::cout);
-  std::cout << "Bye!\n";
+  std::cout << "exit\n";
   return 0;
 }

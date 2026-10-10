@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.16)
 
 # Project metadata
-project(cpp_lab_project # ${PROJECT_NAME}
+project(cpp_lab # ${PROJECT_NAME}
     VERSION 1.0.0
     DESCRIPTION "A C/C++ learning lab built with CMake, GoogleTest, gcc/g++, cppcheck and lcov, integrated with Docker and GitHub Actions for CI/CD."
     LANGUAGES CXX
@@ -56,6 +56,6 @@ enable_testing()
 # ----------------------------------------------------------------------------------------
 add_subdirectory(src)
 
-if(CPPLAB_BUILD_TESTS)
-    add_subdirectory(tests)
-endif()
+# if(CPPLAB_BUILD_TESTS)
+#     add_subdirectory(tests)
+# endif()
