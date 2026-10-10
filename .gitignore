@@ -10,7 +10,7 @@ coverage_lcov/
 Testing/
 
 # Local-only files
-/private/
+docs/private/
 .cache/
 __pycache__/
 *Identifier
