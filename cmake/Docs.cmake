@@ -9,10 +9,10 @@
 # rest of the build is unaffected. See docs/doxygen.md.
 # ---------------------------------------------------------------------------
 
-option(CPPLAB_BUILD_DOCS "Add the 'docs' target (needs doxygen; graphviz is optional)" ON)
-option(CPPLAB_DOCS_WARNINGS_AS_ERRORS "Fail the 'docs' target on Doxygen warnings" OFF)
+option(CPPBYTES_BUILD_DOCS "Add the 'docs' target (needs doxygen; graphviz is optional)" ON)
+option(CPPBYTES_DOCS_WARNINGS_AS_ERRORS "Fail the 'docs' target on Doxygen warnings" OFF)
 
-if(NOT CPPLAB_BUILD_DOCS)
+if(NOT CPPBYTES_BUILD_DOCS)
     return()
 endif()
 
@@ -47,19 +47,19 @@ else()
     set(DOXYGEN_HAVE_DOT NO)
 endif()
 
-if(CPPLAB_DOCS_WARNINGS_AS_ERRORS)
+if(CPPBYTES_DOCS_WARNINGS_AS_ERRORS)
     set(DOXYGEN_WARN_AS_ERROR FAIL_ON_WARNINGS)
 else()
     set(DOXYGEN_WARN_AS_ERROR NO)
 endif()
 
-set(cpplab_doxyfile "${CMAKE_BINARY_DIR}/Doxyfile")
-configure_file("${PROJECT_SOURCE_DIR}/docs/Doxyfile.in" "${cpplab_doxyfile}" @ONLY)
+set(cppbytes_doxyfile "${CMAKE_BINARY_DIR}/Doxyfile")
+configure_file("${PROJECT_SOURCE_DIR}/docs/Doxyfile.in" "${cppbytes_doxyfile}" @ONLY)
 
 # Not part of ALL: documentation is generated on demand, not on every build.
 add_custom_target(docs
     COMMAND ${CMAKE_COMMAND} -E make_directory "${DOXYGEN_OUTPUT_DIRECTORY}"
-    COMMAND Doxygen::doxygen "${cpplab_doxyfile}"
+    COMMAND Doxygen::doxygen "${cppbytes_doxyfile}"
     WORKING_DIRECTORY "${PROJECT_SOURCE_DIR}"
     COMMENT "Generating API documentation with Doxygen -> ${DOXYGEN_OUTPUT_DIRECTORY}/html/index.html"
     VERBATIM)

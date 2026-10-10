@@ -17,7 +17,7 @@ add_library(dp_observer
 add_library(dp::observer ALIAS dp_observer)
 
 target_link_libraries(dp_observer
-	PRIVATE cpplab::lab
+	PRIVATE cppbytes::lab
 )
 
 target_include_directories(dp_observer

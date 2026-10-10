@@ -75,7 +75,7 @@ class Account {
 };
 
 void run() {
-  const fs::path path = fs::temp_directory_path() / "cpplab_accounts.bin";
+  const fs::path path = fs::temp_directory_path() / "cppbytes_accounts.bin";
   const std::vector<Account> accounts{
       {1, "Whitney Houston", 2500.0},
       {2, "Michael Jackson", 5000.0},

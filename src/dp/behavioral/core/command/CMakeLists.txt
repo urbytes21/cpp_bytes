@@ -16,7 +16,7 @@ add_library(dp_command
 add_library(dp::command ALIAS dp_command)
 
 target_link_libraries(dp_command
-	PRIVATE cpplab::lab
+	PRIVATE cppbytes::lab
 )
 
 target_include_directories(dp_command

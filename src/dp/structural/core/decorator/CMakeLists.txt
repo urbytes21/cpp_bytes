@@ -17,7 +17,7 @@ add_library(dp_decorator
 add_library(dp::decorator ALIAS dp_decorator)
 
 target_link_libraries(dp_decorator
-	PRIVATE cpplab::lab
+	PRIVATE cppbytes::lab
 )
 
 target_include_directories(dp_decorator

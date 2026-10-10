@@ -52,9 +52,9 @@ jobs:
       - name: Generate documentation
         run: |
           cmake -S . -B build-docs \
-                -DCPPLAB_BUILD_GUI=OFF \
-                -DCPPLAB_BUILD_TESTS=OFF \
-                -DCPPLAB_DOCS_WARNINGS_AS_ERRORS=ON
+                -DCPPBYTES_BUILD_GUI=OFF \
+                -DCPPBYTES_BUILD_TESTS=OFF \
+                -DCPPBYTES_DOCS_WARNINGS_AS_ERRORS=ON
           cmake --build build-docs --target docs
 
       - name: Show Doxygen warnings

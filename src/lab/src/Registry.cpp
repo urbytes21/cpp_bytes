@@ -6,8 +6,8 @@
 
 // Absolute path of the repository, injected by CMake. Used to turn __FILE__
 // into a repository-relative path.
-#ifndef CPPLAB_SOURCE_DIR
-#define CPPLAB_SOURCE_DIR ""
+#ifndef CPPBYTES_SOURCE_DIR
+#define CPPBYTES_SOURCE_DIR ""
 #endif
 
 namespace lab {
@@ -112,7 +112,7 @@ bool Registry::add(std::string_view file, std::string_view name,
                    std::string_view description, ExampleFunction run,
                    unsigned flags) {
   Example example;
-  example.source = detail::relativeSourcePath(file, CPPLAB_SOURCE_DIR);
+  example.source = detail::relativeSourcePath(file, CPPBYTES_SOURCE_DIR);
   example.group = detail::groupFromSourcePath(example.source);
   example.name = std::string(name);
   example.id = example.group + "/" + example.name;

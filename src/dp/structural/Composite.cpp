@@ -28,7 +28,7 @@ LAB_EXAMPLE("Composite",
   Folder& lab = src.add<Folder>("lab");
   lab.add<File>("Registry.cpp", 4100);
   lab.add<File>("Menu.cpp", 6300);
-  root.add<Shortcut>("latest-log", "/var/log/cpplab.log");
+  root.add<Shortcut>("latest-log", "/var/log/cppbytes.log");
   root.print(1);
 
   LOG_SECTION("The client treats leaves and composites alike");

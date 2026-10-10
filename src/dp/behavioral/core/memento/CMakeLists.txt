@@ -8,7 +8,7 @@ add_library(dp_memento
 add_library(dp::memento ALIAS dp_memento)
 
 target_link_libraries(dp_memento
-	PRIVATE cpplab::lab
+	PRIVATE cppbytes::lab
 )
 
 target_include_directories(dp_memento

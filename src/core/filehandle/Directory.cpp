@@ -29,7 +29,7 @@ namespace fs = std::filesystem;
 
 void paths() {
   LOG_SECTION("Working with paths");
-  const fs::path file = fs::path("projects") / "cpp-lab" / "src" / "main.cpp";
+  const fs::path file = fs::path("projects") / "cpp-bytes" / "src" / "main.cpp";
   LOG_S("path        : " << file.string());
   LOG_S("filename    : " << file.filename().string());
   LOG_S("stem        : " << file.stem().string());
@@ -69,7 +69,7 @@ void directories(const fs::path& root) {
 }
 
 void run() {
-  const fs::path root = fs::temp_directory_path() / "cpplab_directory_demo";
+  const fs::path root = fs::temp_directory_path() / "cppbytes_directory_demo";
   fs::remove_all(root);  // start from a clean state
   fs::create_directory(root);
 

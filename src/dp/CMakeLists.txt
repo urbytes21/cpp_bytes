@@ -1,4 +1,4 @@
-add_library(cpplab_dp
+add_library(cppbytes_dp
 	${CMAKE_CURRENT_SOURCE_DIR}/behavioral/ChainOfResponsibility.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/behavioral/Command.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/behavioral/Interpreter.cpp
@@ -24,7 +24,7 @@ add_library(cpplab_dp
 	${CMAKE_CURRENT_SOURCE_DIR}/structural/Proxy.cpp
 )
 
-add_library(cpplab::dp ALIAS cpplab_dp)
+add_library(cppbytes::dp ALIAS cppbytes_dp)
 
 add_subdirectory(behavioral/core/chain_of_responsibility)
 add_subdirectory(behavioral/core/command)
@@ -50,9 +50,9 @@ add_subdirectory(structural/core/facade)
 add_subdirectory(structural/core/flyweight)
 add_subdirectory(structural/core/proxy)
 
-target_link_libraries(cpplab_dp
+target_link_libraries(cppbytes_dp
 	PRIVATE
-		cpplab::lab
+		cppbytes::lab
 		dp::chain_of_responsibility
 		dp::command
 		dp::iterator

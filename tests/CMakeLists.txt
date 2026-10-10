@@ -4,7 +4,7 @@
 # Every *Test.cpp below this folder is compiled automatically - add a file, rebuild.
 #
 #   ctest --test-dir build -L unit                                    # all unit tests
-#   ./build/bin/cpp_lab_project_unit_test --gtest_filter='Registry*'   # a subset
+#   ./build/bin/cpp_bytes_unit_test --gtest_filter='Registry*'   # a subset
 #
 # The smoke tests that run every example are registered in src/CMakeLists.txt (label
 # "example").
@@ -29,7 +29,7 @@ target_include_directories(${PROJECT_NAME}_unit_test
 # gmock_main provides main() and links GoogleTest as well
 target_link_libraries(${PROJECT_NAME}_unit_test
     PRIVATE
-        cpplab::lab
+        cppbytes::lab
         GTest::gmock_main
 )
 

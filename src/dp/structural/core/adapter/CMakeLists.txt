@@ -20,7 +20,7 @@ add_library(dp_adapter
 add_library(dp::adapter ALIAS dp_adapter)
 
 target_link_libraries(dp_adapter
-	PRIVATE cpplab::lab
+	PRIVATE cppbytes::lab
 )
 
 target_include_directories(dp_adapter

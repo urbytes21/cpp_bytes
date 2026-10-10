@@ -1,7 +1,7 @@
 ---
 # Configure clang-tidy for this project.
 #
-# cpp-lab is a teaching repository. Examples deliberately show the "before"
+# cpp-bytes is a teaching repository. Examples deliberately show the "before"
 # version of a pattern, copy objects so a constructor call becomes visible, read
 # moved-from objects to show what happens, and spell types out instead of using
 # auto. The following checks fight exactly that and are therefore disabled at

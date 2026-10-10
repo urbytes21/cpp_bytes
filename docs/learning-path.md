@@ -3,7 +3,7 @@
 The menu is organized by topic; this page suggests an order. Run an example with
 
 ```bash
-./build/bin/cpp_lab_project --run <id>
+./build/bin/cpp_bytes --run <id>
 ```
 
 and read its source next to the output - the header comment of each file says what it teaches.
@@ -112,7 +112,7 @@ coroutines, `std::expected` and the rest of the open topics are listed per stand
 [cpp-standards-coverage.md](cpp-standards-coverage.md).
 
 ```bash
-./build/bin/cpp_lab_project --list | grep draft
+./build/bin/cpp_bytes --list | grep draft
 ```
 
 Filling one in is the best exercise the lab has to offer.

@@ -3,7 +3,7 @@
 ```bash
 ctest --test-dir build -L unit --output-on-failure      # the tests below
 ctest --test-dir build -L example                       # run every example once
-./build/bin/cpp_lab_project_unit_test --gtest_filter='Calculator*'
+./build/bin/cpp_bytes_unit_test --gtest_filter='Calculator*'
 ```
 
 | Folder | Contents |

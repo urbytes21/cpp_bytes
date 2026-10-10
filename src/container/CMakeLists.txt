@@ -1,4 +1,4 @@
-add_library(cpplab_container
+add_library(cppbytes_container
     sequence/Array.cpp
     # sequence/Deque.cpp
     sequence/ForwardList.cpp
@@ -18,7 +18,7 @@ add_library(cpplab_container
     adapter/Stack.cpp
 )
 
-add_library(cpplab::container ALIAS cpplab_container)
+add_library(cppbytes::container ALIAS cppbytes_container)
 
-target_compile_options(cpplab_container PRIVATE -Wall -Wextra -Werror)
-target_link_libraries(cpplab_container PRIVATE cpplab::lab)
+target_compile_options(cppbytes_container PRIVATE -Wall -Wextra -Werror)
+target_link_libraries(cppbytes_container PRIVATE cppbytes::lab)

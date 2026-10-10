@@ -1,5 +1,5 @@
 > Examples: `dp/structural/{Adapter, Bridge, Composite, Decorator, Facade, Flyweight, Proxy}` - run
-> one with `./build/bin/cpp_lab_project --run dp/structural/Decorator`
+> one with `./build/bin/cpp_bytes --run dp/structural/Decorator`
 
 # Structural Design Patterns
 

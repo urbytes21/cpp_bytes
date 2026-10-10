@@ -37,9 +37,9 @@ From the repository root:
 
 ```bash
 cmake -S . -B build/debug -DCMAKE_BUILD_TYPE=Debug
-cmake --build build/debug --target cpp_lab
-./build/debug/bin/cpp_lab --plain --run container/sequence/Vector
-./build/debug/bin/cpp_lab --plain --run-all container
+cmake --build build/debug --target cpp_bytes
+./build/debug/bin/cpp_bytes --plain --run container/sequence/Vector
+./build/debug/bin/cpp_bytes --plain --run-all container
 ```
 
 All files are included in the container library. In the default C++20 build,

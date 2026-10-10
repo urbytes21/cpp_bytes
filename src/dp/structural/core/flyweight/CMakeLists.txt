@@ -9,7 +9,7 @@ add_library(dp_flyweight
 add_library(dp::flyweight ALIAS dp_flyweight)
 
 target_link_libraries(dp_flyweight
-	PRIVATE cpplab::lab
+	PRIVATE cppbytes::lab
 )
 
 target_include_directories(dp_flyweight

@@ -76,7 +76,7 @@ void readLineByLine(const fs::path& path) {
 }
 
 void run() {
-  const fs::path path = fs::temp_directory_path() / "cpplab_fileio_test.csv";
+  const fs::path path = fs::temp_directory_path() / "cppbytes_fileio_test.csv";
   writeFile(path);
   appendToFile(path);
   readWordByWord(path);

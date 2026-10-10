@@ -15,7 +15,7 @@ add_library(dp_factory_method
 add_library(dp::factory_method ALIAS dp_factory_method)
 
 target_link_libraries(dp_factory_method
-	PRIVATE cpplab::lab
+	PRIVATE cppbytes::lab
 )
 
 target_include_directories(dp_factory_method

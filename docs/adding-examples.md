@@ -7,7 +7,7 @@ The lab is built so that adding an example takes one file and no build-system ch
 ```bash
 ./scripts/new_example.sh core/utils Span "std::span: a view over contiguous memory"
 cmake --build build
-./build/bin/cpp_lab_project --run core/utils/Span
+./build/bin/cpp_bytes --run core/utils/Span
 
 # --draft scaffolds a topic you want to write later
 ./scripts/new_example.sh --draft core/utils Mdspan "std::mdspan: multidimensional views"
@@ -127,7 +127,7 @@ test fails if the example throws an uncaught exception. It also fails under the 
 if the example leaks memory or executes undefined behavior:
 
 ```bash
-cmake -S . -B build-asan -DCPPLAB_ENABLE_SANITIZERS=ON
+cmake -S . -B build-asan -DCPPBYTES_ENABLE_SANITIZERS=ON
 cmake --build build-asan -j && ctest --test-dir build-asan -L example -j
 ```
 
@@ -141,7 +141,7 @@ To start a new module such as `src/algorithms/`:
 1. Create the folder and add examples to it.
 2. Add one line to `src/CMakeLists.txt`:
    ```cmake
-   cpplab_add_example_module(algorithms)
+   cppbytes_add_example_module(algorithms)
    ```
 3. Add a `README.md` to the folder and link it from `docs/README.md`.
 

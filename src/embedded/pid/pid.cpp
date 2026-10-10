@@ -19,7 +19,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  *
- * Modified for cpp-lab: namespace, std::unique_ptr pimpl, input validation.
+ * Modified for cpp-bytes: namespace, std::unique_ptr pimpl, input validation.
  */
 
 #include "pid.h"

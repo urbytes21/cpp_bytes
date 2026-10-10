@@ -1,6 +1,6 @@
-add_library(cpplab_core
+add_library(cppbytes_core
 )
 
 
 
-add_library(cpplab::core ALIAS cpplab_core)
+add_library(cppbytes::core ALIAS cppbytes_core)

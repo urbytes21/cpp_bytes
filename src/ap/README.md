@@ -1,5 +1,5 @@
 > Programs: `./build/bin/ap` (everything in one class), `./build/bin/mvc_ap`, `./build/bin/mvvm_ap`.
-> They are built only when gtkmm-4.0 is installed (`CPPLAB_BUILD_GUI`).
+> They are built only when gtkmm-4.0 is installed (`CPPBYTES_BUILD_GUI`).
 
 ## Architecture Patterns
 ### 1. MVVM

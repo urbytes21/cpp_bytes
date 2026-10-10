@@ -152,7 +152,7 @@ void TCPServer::acceptLoop() {
 
 void TCPServer::handleClient(int client_fd) {
   sendAll(client_fd,
-          "Connected to the cpp-lab echo server on port " +
+          "Connected to the cpp-bytes echo server on port " +
               std::to_string(bound_port_) +
               "\nType Q to disconnect or SHUTDOWN to stop the server.\n");
 

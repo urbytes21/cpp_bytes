@@ -11,7 +11,7 @@ add_library(dp_prototype
 add_library(dp::prototype ALIAS dp_prototype)
 
 target_link_libraries(dp_prototype
-	PRIVATE cpplab::lab
+	PRIVATE cppbytes::lab
 )
 
 target_include_directories(dp_prototype

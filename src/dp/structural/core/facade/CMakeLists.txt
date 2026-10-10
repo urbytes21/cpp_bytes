@@ -12,7 +12,7 @@ add_library(dp_facade
 add_library(dp::facade ALIAS dp_facade)
 
 target_link_libraries(dp_facade
-	PRIVATE cpplab::lab
+	PRIVATE cppbytes::lab
 )
 
 target_include_directories(dp_facade

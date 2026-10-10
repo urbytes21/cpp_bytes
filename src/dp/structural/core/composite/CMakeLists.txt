@@ -12,7 +12,7 @@ add_library(dp_composite
 add_library(dp::composite ALIAS dp_composite)
 
 target_link_libraries(dp_composite
-	PRIVATE cpplab::lab
+	PRIVATE cppbytes::lab
 )
 
 target_include_directories(dp_composite

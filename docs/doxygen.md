@@ -28,8 +28,8 @@ CMake options:
 
 | Option                            | Default | Meaning                                        |
 | --------------------------------- | ------- | ---------------------------------------------- |
-| `CPPLAB_BUILD_DOCS`               | `ON`    | add the `docs` target when Doxygen is installed |
-| `CPPLAB_DOCS_WARNINGS_AS_ERRORS`  | `OFF`   | fail the target on Doxygen warnings (CI uses `ON`) |
+| `CPPBYTES_BUILD_DOCS`               | `ON`    | add the `docs` target when Doxygen is installed |
+| `CPPBYTES_DOCS_WARNINGS_AS_ERRORS`  | `OFF`   | fail the target on Doxygen warnings (CI uses `ON`) |
 
 To run Doxygen without CMake, use the generated file: `doxygen build/Doxyfile`. Do not edit it,
 it is overwritten on every configure; change `docs/Doxyfile.in` instead.
@@ -74,7 +74,7 @@ there) and, on pushes to `master`, deploys it to GitHub Pages.
 3. Push to `master` (or run the workflow manually from the **Actions** tab).
 
 The site is then served at `https://<owner>.github.io/<repo>/` - for this repository,
-<https://urbytes21.github.io/cpp-lab/>. The workflow needs no token: it uses the `pages: write`
+<https://urbytes21.github.io/cpp-bytes/>. The workflow needs no token: it uses the `pages: write`
 and `id-token: write` permissions declared in the job.
 
 If the deploy step fails with "Pages is not enabled", step 2 above has not been done yet. The build
@@ -93,11 +93,11 @@ keep the wiki as the hand-written entry point and link it to the generated site.
 2. Paste something like:
 
    ```markdown
-   # cpp-lab
+   # cpp-bytes
 
-   - [API documentation](https://urbytes21.github.io/cpp-lab/) (generated with Doxygen on every push to master)
-   - [Learning path](https://github.com/urbytes21/cpp-lab/blob/master/docs/learning-path.md)
-   - [Adding examples](https://github.com/urbytes21/cpp-lab/blob/master/docs/adding-examples.md)
+   - [API documentation](https://urbytes21.github.io/cpp-bytes/) (generated with Doxygen on every push to master)
+   - [Learning path](https://github.com/urbytes21/cpp-bytes/blob/master/docs/learning-path.md)
+   - [Adding examples](https://github.com/urbytes21/cpp-bytes/blob/master/docs/adding-examples.md)
    ```
 
 **Automatically**, with the helper script:
@@ -120,7 +120,7 @@ repository, so a push needs credentials with write access to the repository.
 
 | Symptom                                  | Cause and fix                                                      |
 | ---------------------------------------- | ------------------------------------------------------------------ |
-| No `docs` target                          | Doxygen is not installed, or `-DCPPLAB_BUILD_DOCS=OFF`             |
+| No `docs` target                          | Doxygen is not installed, or `-DCPPBYTES_BUILD_DOCS=OFF`             |
 | No class diagrams                         | graphviz is missing; install it and re-run `cmake -S . -B build`    |
 | `warning: ... does not exist`             | a path in `DOXYGEN_INPUT` (`cmake/Docs.cmake`) points at a deleted file |
 | CI docs job fails but the site looks fine | a real Doxygen warning: read `build/docs/doxygen-warnings.log`      |

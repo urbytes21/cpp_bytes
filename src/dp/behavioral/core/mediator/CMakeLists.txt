@@ -11,7 +11,7 @@ add_library(dp_mediator
 add_library(dp::mediator ALIAS dp_mediator)
 
 target_link_libraries(dp_mediator
-	PRIVATE cpplab::lab
+	PRIVATE cppbytes::lab
 )
 
 target_include_directories(dp_mediator

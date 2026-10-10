@@ -58,8 +58,8 @@ git clone https://github.com/$owner/$repo.git
 cd $repo
 cmake -S . -B build
 cmake --build build -j
-./build/bin/cpp_lab_project          # interactive menu
-./build/bin/cpp_lab_project --help   # command line
+./build/bin/cpp_bytes          # interactive menu
+./build/bin/cpp_bytes --help   # command line
 \`\`\`
 PAGE
 )"

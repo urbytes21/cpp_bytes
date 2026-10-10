@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.16)
 
 # Project metadata
-project(cpp_lab # ${PROJECT_NAME}
+project(cpp_bytes # ${PROJECT_NAME}
     VERSION 1.0.0
     DESCRIPTION "A C/C++ learning lab built with CMake, GoogleTest, gcc/g++, cppcheck and lcov, integrated with Docker and GitHub Actions for CI/CD."
     LANGUAGES CXX
@@ -12,13 +12,13 @@ list(APPEND CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/cmake)
 # ----------------------------------------------------------------------------------------
 # Options (pass with -D<OPTION>=<VALUE>)
 # ----------------------------------------------------------------------------------------
-option(CPPLAB_BUILD_TESTS "Build the unit tests and register one smoke test per example" ON)
-option(CPPLAB_BUILD_DEMOS "Build the standalone demos in src/demo" ON)
-set(CPPLAB_BUILD_GUI "AUTO" CACHE STRING "Build the GTK4 apps in src/ap: AUTO (if gtkmm-4.0 is found), ON or OFF")
-set_property(CACHE CPPLAB_BUILD_GUI PROPERTY STRINGS AUTO ON OFF)
+option(CPPBYTES_BUILD_TESTS "Build the unit tests and register one smoke test per example" ON)
+option(CPPBYTES_BUILD_DEMOS "Build the standalone demos in src/demo" ON)
+set(CPPBYTES_BUILD_GUI "AUTO" CACHE STRING "Build the GTK4 apps in src/ap: AUTO (if gtkmm-4.0 is found), ON or OFF")
+set_property(CACHE CPPBYTES_BUILD_GUI PROPERTY STRINGS AUTO ON OFF)
 option(ENABLE_COVERAGE "Enable coverage reporting (gcc/clang)" OFF)
-option(CPPLAB_ENABLE_SANITIZERS "Build with AddressSanitizer and UndefinedBehaviorSanitizer" OFF)
-option(CPPLAB_WARNINGS_AS_ERRORS "Treat compiler warnings as errors" OFF)
+option(CPPBYTES_ENABLE_SANITIZERS "Build with AddressSanitizer and UndefinedBehaviorSanitizer" OFF)
+option(CPPBYTES_WARNINGS_AS_ERRORS "Treat compiler warnings as errors" OFF)
 
 # ----------------------------------------------------------------------------------------
 # Global build settings
@@ -43,9 +43,9 @@ set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
 message(STATUS "C++ Compiler: ${CMAKE_CXX_COMPILER} (${CMAKE_CXX_COMPILER_ID} ${CMAKE_CXX_COMPILER_VERSION})")
 message(STATUS "Build type  : ${CMAKE_BUILD_TYPE}")
 
-# include(CompilerOptions)  # cpplab::options - warnings, coverage, sanitizers
+# include(CompilerOptions)  # cppbytes::options - warnings, coverage, sanitizers
 # include(Dependencies)     # Threads, GoogleTest, gtkmm-4.0
-# include(CppLab)           # cpplab_add_example_module(), cpplab_discover_example_tests()
+# include(CppBytes)           # cppbytes_add_example_module(), cppbytes_discover_example_tests()
 # include(Docs)             # 'docs' target - Doxygen API documentation (optional)
 
 # Enable CTest (unit tests + example smoke tests)
@@ -56,6 +56,6 @@ message(STATUS "Build type  : ${CMAKE_BUILD_TYPE}")
 # ----------------------------------------------------------------------------------------
 add_subdirectory(src)
 
-# if(CPPLAB_BUILD_TESTS)
+# if(CPPBYTES_BUILD_TESTS)
 #     add_subdirectory(tests)
 # endif()

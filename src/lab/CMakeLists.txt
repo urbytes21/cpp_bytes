@@ -1,4 +1,4 @@
-add_library(cpplab_lab STATIC
+add_library(cppbytes_lab STATIC
     src/CommandLine.cpp
     src/Logger.cpp
     src/Menu.cpp
@@ -6,9 +6,9 @@ add_library(cpplab_lab STATIC
     src/Runner.cpp
 )
 
-add_library(cpplab::lab ALIAS cpplab_lab)
+add_library(cppbytes::lab ALIAS cppbytes_lab)
 
-target_include_directories(cpplab_lab
+target_include_directories(cppbytes_lab
     PUBLIC
         ${CMAKE_CURRENT_SOURCE_DIR}/include
     PRIVATE

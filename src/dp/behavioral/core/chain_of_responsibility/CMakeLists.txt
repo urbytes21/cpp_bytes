@@ -15,7 +15,7 @@ add_library(dp_chain_of_responsibility
 add_library(dp::chain_of_responsibility ALIAS dp_chain_of_responsibility)
 
 target_link_libraries(dp_chain_of_responsibility
-	PRIVATE cpplab::lab
+	PRIVATE cppbytes::lab
 )
 
 target_include_directories(dp_chain_of_responsibility

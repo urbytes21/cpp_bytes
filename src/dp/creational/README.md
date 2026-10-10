@@ -1,5 +1,5 @@
 > Examples: `dp/creational/{FactoryMethod, AbstractFactory, Builder, Prototype, Singleton}` - run
-> one with `./build/bin/cpp_lab_project --run dp/creational/Builder`
+> one with `./build/bin/cpp_bytes --run dp/creational/Builder`
 
 # Creational Design Patterns
 

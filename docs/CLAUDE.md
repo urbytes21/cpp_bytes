@@ -14,7 +14,7 @@ is built outside CMake.
 ```bash
 cmake -S . -B build                 # Debug by default
 cmake --build build -j
-./build/bin/cpp_lab_project         # interactive menu
+./build/bin/cpp_bytes         # interactive menu
 ctest --test-dir build -j --output-on-failure
 ./scripts/run.sh                    # build + cppcheck + tests + menu
 ```
@@ -23,10 +23,10 @@ Command line of the app: `--list [filter]`, `--run <id|filter>`, `--run-all [fil
 `--list-ids`, `--plain` (no log prefixes/colors), `--mode dev|uat|prod`, `--version`, `--help`.
 Example ids look like `core/smart_pointer/Weak`.
 
-CMake options: `CPPLAB_BUILD_TESTS` (ON), `CPPLAB_BUILD_DEMOS` (ON), `CPPLAB_BUILD_GUI`
-(AUTO/ON/OFF - gtkmm-4.0 is optional), `CPPLAB_BUILD_DOCS` (ON, needs doxygen),
-`CPPLAB_DOCS_WARNINGS_AS_ERRORS` (OFF), `CPPLAB_ENABLE_SANITIZERS` (OFF, ASan+UBSan),
-`CPPLAB_WARNINGS_AS_ERRORS` (OFF), `ENABLE_COVERAGE` (OFF).
+CMake options: `CPPBYTES_BUILD_TESTS` (ON), `CPPBYTES_BUILD_DEMOS` (ON), `CPPBYTES_BUILD_GUI`
+(AUTO/ON/OFF - gtkmm-4.0 is optional), `CPPBYTES_BUILD_DOCS` (ON, needs doxygen),
+`CPPBYTES_DOCS_WARNINGS_AS_ERRORS` (OFF), `CPPBYTES_ENABLE_SANITIZERS` (OFF, ASan+UBSan),
+`CPPBYTES_WARNINGS_AS_ERRORS` (OFF), `ENABLE_COVERAGE` (OFF).
 
 Tests: `-L unit` are the GoogleTest tests in `tests/`, `-L example` are auto-generated smoke tests
 that run every non-interactive example once (`example:<id>`). Both must stay green, also in a
@@ -39,7 +39,7 @@ sanitizer build.
 - `LAB_EXAMPLE("Name", "description" [, lab::kInteractive]) { ... }` (lab/Example.h) declares a
   file-local function and registers it in `lab::Registry` from a static initializer.
 - The **menu group comes from the file path**: `src/core/smart_pointer/Weak.cpp` becomes the id
-  `core/smart_pointer/Weak`. `CPPLAB_SOURCE_DIR` (a compile definition) turns `__FILE__` into a
+  `core/smart_pointer/Weak`. `CPPBYTES_SOURCE_DIR` (a compile definition) turns `__FILE__` into a
   repository-relative path.
 - `lab::Registry` keeps examples sorted, rejects duplicate ids and invalid names; `main.cpp`
   reports registry errors and exits non-zero.
@@ -65,7 +65,7 @@ finished and `lab::kDraft` is removed.
 ./scripts/new_example.sh core/utils Span "std::span: a view over contiguous memory"
 ```
 
-No CMake change is needed: `cpplab_add_example_module()` globs each module folder with
+No CMake change is needed: `cppbytes_add_example_module()` globs each module folder with
 `CONFIGURE_DEPENDS`, and the ctest smoke test is discovered from `--list-ids` at test time. A new
 top-level module needs one line in `src/CMakeLists.txt`. Full conventions:
 `docs/adding-examples.md`.
@@ -106,7 +106,7 @@ clang-tidy -p build $(git ls-files 'src/*.cpp')     # configured by .clang-tidy,
 
 `cmake --build build --target docs` runs Doxygen (`cmake/Docs.cmake` fills `docs/Doxyfile.in` into
 `build/Doxyfile`) and writes `build/docs/html/`. The target exists only when doxygen is installed;
-`CPPLAB_DOCS_WARNINGS_AS_ERRORS=ON` (used in CI) turns Doxygen warnings into failures, so keep
+`CPPBYTES_DOCS_WARNINGS_AS_ERRORS=ON` (used in CI) turns Doxygen warnings into failures, so keep
 `build/docs/doxygen-warnings.log` empty. Doxygen parses the Markdown too: a fenced code block needs
 a blank line before it, and a bare `<header>` in prose is read as an HTML tag - write `` `<random>` ``.
 Public headers in `include/lab/` are documented with `///`; examples keep plain `//` comments and
@@ -115,8 +115,8 @@ are read through the source browser.
 ## CI
 
 - `.github/workflows/cpp-build-test-coverage.yml` runs on push/PR to `master` inside
-  `urboob21/cpp-lab:latest`: cppcheck, build with coverage, `ctest`, lcov summary, a Release job
-  with `CPPLAB_WARNINGS_AS_ERRORS=ON`, and a sanitizer job (`CPPLAB_ENABLE_SANITIZERS=ON`).
+  `urboob21/cpp-bytes:latest`: cppcheck, build with coverage, `ctest`, lcov summary, a Release job
+  with `CPPBYTES_WARNINGS_AS_ERRORS=ON`, and a sanitizer job (`CPPBYTES_ENABLE_SANITIZERS=ON`).
 - `.github/workflows/docs.yml` builds the Doxygen site (warnings are errors) and deploys it to
   GitHub Pages from `master`. `scripts/publish_wiki.sh` refreshes the wiki Home page that links to
   it; see `docs/doxygen.md`.

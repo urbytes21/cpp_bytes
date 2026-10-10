@@ -6,7 +6,7 @@
 set -e  # Exit immediately if a command fails
 
 BUILD_DIR="./build"
-PROJECT_EXEC="$BUILD_DIR/bin/cpp_lab_project"
+PROJECT_EXEC="$BUILD_DIR/bin/cpp_bytes"
 RUN_TESTS=1
 if [[ "${1:-}" == "--no-tests" ]]; then
     RUN_TESTS=0

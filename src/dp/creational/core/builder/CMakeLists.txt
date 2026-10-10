@@ -18,7 +18,7 @@ add_library(dp_builder
 add_library(dp::builder ALIAS dp_builder)
 
 target_link_libraries(dp_builder
-	PRIVATE cpplab::lab
+	PRIVATE cppbytes::lab
 )
 
 target_include_directories(dp_builder

@@ -136,4 +136,4 @@ fi
 echo "created src/$folder/$name.cpp"
 echo
 echo "Add the new source file to your module's CMakeLists.txt, then build and run it:"
-echo "  cmake --build build && ./build/bin/cpp_lab_project --run $folder/$name"
+echo "  cmake --build build && ./build/bin/cpp_bytes --run $folder/$name"

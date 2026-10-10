@@ -1,4 +1,4 @@
-# cppcheck suppressions for cpp-lab
+# cppcheck suppressions for cpp-bytes
 
 #   cppcheck --suppressions-list=.cppcheck-suppressions ... ./src ./include
 

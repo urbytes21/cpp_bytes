@@ -16,7 +16,7 @@ Legend:
 List every unfinished example with:
 
 ```bash
-./build/bin/cpp_lab_project --list | grep draft
+./build/bin/cpp_bytes --list | grep draft
 ```
 
 ---
@@ -155,7 +155,7 @@ already shown elsewhere (see [src/dp/idiom/README.md](../src/dp/idiom/README.md)
 ---
 ## 8. Filling in a draft
 
-1. Run it: `./build/bin/cpp_lab_project --run core/utils/Expected` - it prints its own outline.
+1. Run it: `./build/bin/cpp_bytes --run core/utils/Expected` - it prints its own outline.
 2. Open the file, replace `outline()` with real demonstrations (keep helpers in the anonymous
    namespace, structure the output with `LOG_SECTION`).
 3. Remove `lab::kDraft` from `LAB_EXAMPLE` and update the table in the folder's `README.md`.

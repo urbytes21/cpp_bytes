@@ -7,8 +7,8 @@
 //     Requires C++17.
 //     Changing a value recompiles every file that includes the header.
 
-#ifndef CPPLAB_INLINE_CONSTANTS_H
-#define CPPLAB_INLINE_CONSTANTS_H
+#ifndef CPPBYTES_INLINE_CONSTANTS_H
+#define CPPBYTES_INLINE_CONSTANTS_H
 
 namespace inline_constants {
 inline constexpr double kPi{3.14159};
@@ -17,4 +17,4 @@ inline constexpr double kMyGravity{
     9.2};  // m/s^2 -- gravity is light on this planet
 }  // namespace inline_constants
 
-#endif  // CPPLAB_INLINE_CONSTANTS_H
+#endif  // CPPBYTES_INLINE_CONSTANTS_H

@@ -14,7 +14,7 @@ add_library(dp_abstract_factory
 add_library(dp::abstract_factory ALIAS dp_abstract_factory)
 
 target_link_libraries(dp_abstract_factory
-	PRIVATE cpplab::lab
+	PRIVATE cppbytes::lab
 )
 
 target_include_directories(dp_abstract_factory

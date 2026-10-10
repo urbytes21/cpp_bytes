@@ -1,4 +1,6 @@
-# cpp-lab
+# cpp-bytes
+
+Learn C++ one example at a time.
 
 A C/C++ learning lab: ~100 small, runnable examples of modern C++ (C++20), design patterns,
 concurrency, sockets and embedded basics - built with CMake, GoogleTest, cppcheck and lcov, with
@@ -21,8 +23,8 @@ or step by step:
 ```bash
 cmake -S . -B build
 cmake --build build -j
-./build/bin/cpp_lab_project           # interactive menu
-./build/bin/cpp_lab_project --help    # command line
+./build/bin/cpp_bytes           # interactive menu
+./build/bin/cpp_bytes --help    # command line
 ```
 
 ### Quick scratch debugging
@@ -70,7 +72,7 @@ The menu mirrors the folders below `src/`:
 
 ```
 ------------------------------------------------------------------------
- cpp-lab / core / smart_pointer   (3 examples)
+ cpp-bytes / core / smart_pointer   (3 examples)
 ------------------------------------------------------------------------
    1. Shared                      std::shared_ptr: reference counting, ...
    2. Unique                      std::unique_ptr: ownership, moves, ...
@@ -85,12 +87,12 @@ search ids and descriptions.
 ### 2.2. Command line
 
 ```bash
-./build/bin/cpp_lab_project --list                        # every example
-./build/bin/cpp_lab_project --list pointer                # filter id or description
-./build/bin/cpp_lab_project --run core/smart_pointer/Weak # run one example by id
-./build/bin/cpp_lab_project --run weak                    # a filter matching exactly one
-./build/bin/cpp_lab_project --run-all dp/behavioral       # all examples in a folder
-./build/bin/cpp_lab_project --plain --run-all             # no log prefixes, no colors
+./build/bin/cpp_bytes --list                        # every example
+./build/bin/cpp_bytes --list pointer                # filter id or description
+./build/bin/cpp_bytes --run core/smart_pointer/Weak # run one example by id
+./build/bin/cpp_bytes --run weak                    # a filter matching exactly one
+./build/bin/cpp_bytes --run-all dp/behavioral       # all examples in a folder
+./build/bin/cpp_bytes --plain --run-all             # no log prefixes, no colors
 ```
 
 Debug builds prefix every log line with `[time][file:line][function]` so you can see where output
@@ -113,7 +115,7 @@ Type lines to have them echoed, `Q` to disconnect, `SHUTDOWN` to stop the server
 
 ```bash
 ./scripts/new_example.sh core/utils Span "std::span: a view over contiguous memory"
-cmake --build build && ./build/bin/cpp_lab_project --run core/utils/Span
+cmake --build build && ./build/bin/cpp_bytes --run core/utils/Span
 ```
 
 By hand, a complete example is:
@@ -150,7 +152,7 @@ sudo apt-get install -y g++ cmake ninja-build git cppcheck clang-tidy clang-form
 ```
 
 GoogleTest is downloaded automatically at configure time (needs network on the first configure;
-use `-DCPPLAB_BUILD_TESTS=OFF` to skip it).
+use `-DCPPBYTES_BUILD_TESTS=OFF` to skip it).
 
 ---
 ## 5. Build options
@@ -158,17 +160,17 @@ use `-DCPPLAB_BUILD_TESTS=OFF` to skip it).
 | Option | Default | Meaning |
 |---|---|---|
 | `CMAKE_BUILD_TYPE` | `Debug` | `Debug`, `Release`, `RelWithDebInfo` |
-| `CPPLAB_BUILD_TESTS` | `ON` | unit tests and one smoke test per example |
-| `CPPLAB_BUILD_DEMOS` | `ON` | standalone demos in `src/demo` |
-| `CPPLAB_BUILD_GUI` | `AUTO` | GTK4 apps in `src/ap`: `AUTO`, `ON`, `OFF` |
-| `CPPLAB_BUILD_DOCS` | `ON` | add the `docs` target when doxygen is installed |
-| `CPPLAB_DOCS_WARNINGS_AS_ERRORS` | `OFF` | fail the `docs` target on Doxygen warnings |
-| `CPPLAB_ENABLE_SANITIZERS` | `OFF` | AddressSanitizer + UndefinedBehaviorSanitizer |
-| `CPPLAB_WARNINGS_AS_ERRORS` | `OFF` | `-Werror` |
+| `CPPBYTES_BUILD_TESTS` | `ON` | unit tests and one smoke test per example |
+| `CPPBYTES_BUILD_DEMOS` | `ON` | standalone demos in `src/demo` |
+| `CPPBYTES_BUILD_GUI` | `AUTO` | GTK4 apps in `src/ap`: `AUTO`, `ON`, `OFF` |
+| `CPPBYTES_BUILD_DOCS` | `ON` | add the `docs` target when doxygen is installed |
+| `CPPBYTES_DOCS_WARNINGS_AS_ERRORS` | `OFF` | fail the `docs` target on Doxygen warnings |
+| `CPPBYTES_ENABLE_SANITIZERS` | `OFF` | AddressSanitizer + UndefinedBehaviorSanitizer |
+| `CPPBYTES_WARNINGS_AS_ERRORS` | `OFF` | `-Werror` |
 | `ENABLE_COVERAGE` | `OFF` | `--coverage` for lcov/gcovr |
 
 ```bash
-cmake -S . -B build -DCMAKE_BUILD_TYPE=Release -DCPPLAB_BUILD_GUI=OFF
+cmake -S . -B build -DCMAKE_BUILD_TYPE=Release -DCPPBYTES_BUILD_GUI=OFF
 ```
 
 ---
@@ -179,7 +181,7 @@ ctest --test-dir build -j --output-on-failure     # everything
 ctest --test-dir build -L unit                    # GoogleTest unit tests
 ctest --test-dir build -L example                 # run every example once
 ctest --test-dir build -R 'example:dp/'           # only the design patterns
-./build/bin/cpp_lab_project_unit_test --gtest_filter='Registry*'
+./build/bin/cpp_bytes_unit_test --gtest_filter='Registry*'
 ```
 
 - Unit tests live in `tests/`; any `*Test.cpp` file is picked up automatically. `tests/gtest_primer`
@@ -190,14 +192,14 @@ ctest --test-dir build -R 'example:dp/'           # only the design patterns
 **Sanitizers** catch memory errors, leaks and undefined behavior:
 
 ```bash
-cmake -S . -B build-asan -DCPPLAB_ENABLE_SANITIZERS=ON
+cmake -S . -B build-asan -DCPPBYTES_ENABLE_SANITIZERS=ON
 cmake --build build-asan -j && ctest --test-dir build-asan -j
 ```
 
 **Memory leaks with valgrind**:
 
 ```bash
-valgrind --leak-check=full ./build/bin/cpp_lab_project --plain --run-all core/class
+valgrind --leak-check=full ./build/bin/cpp_bytes --plain --run-all core/class
 ```
 
 ---
@@ -246,7 +248,7 @@ it to GitHub Pages from `master`. Setup and the wiki recipe: [docs/doxygen.md](d
 
 1. Install the *C/C++ Extension Pack* and `gdb` (`sudo apt install gdb`).
 2. Press **F5**. `.vscode/launch.json` builds `build/debug` through the task in
-   `.vscode/tasks.json` and starts `build/debug/bin/cpp_lab_project` under gdb.
+   `.vscode/tasks.json` and starts `build/debug/bin/cpp_bytes` under gdb.
 
 | Shortcut | Action |
 |---|---|
@@ -263,14 +265,14 @@ To debug a single example without the menu, set `"args": ["--run", "core/smart_p
 
 ```bash
 # Build the image (swap DOCKER_USERNAME for your account)
-docker build -t DOCKER_USERNAME/cpp-lab .
+docker build -t DOCKER_USERNAME/cpp-bytes .
 docker image ls
 
 # Open a shell inside the image
-docker run -it --rm DOCKER_USERNAME/cpp-lab:latest /bin/bash
+docker run -it --rm DOCKER_USERNAME/cpp-bytes:latest /bin/bash
 
-# Push it (CI uses urboob21/cpp-lab:latest)
-docker push DOCKER_USERNAME/cpp-lab
+# Push it (CI uses urboob21/cpp-bytes:latest)
+docker push DOCKER_USERNAME/cpp-bytes
 ```
 
 `-i` keeps stdin open, `-t` allocates a terminal, `--rm` removes the container when it exits.
@@ -280,8 +282,8 @@ docker push DOCKER_USERNAME/cpp-lab
 
 | Symptom | Fix |
 |---|---|
-| `gtkmm-4.0 not found` | `sudo apt install libgtkmm-4.0-dev`, or configure with `-DCPPLAB_BUILD_GUI=OFF` |
-| FetchContent cannot download GoogleTest | configure with `-DCPPLAB_BUILD_TESTS=OFF` |
+| `gtkmm-4.0 not found` | `sudo apt install libgtkmm-4.0-dev`, or configure with `-DCPPBYTES_BUILD_GUI=OFF` |
+| FetchContent cannot download GoogleTest | configure with `-DCPPBYTES_BUILD_TESTS=OFF` |
 | `Does not match the generator used previously` | delete the `build/` directory and configure again |
 | `registry error: duplicate example id ...` | two `LAB_EXAMPLE` names collide in one folder |
 | cppcheck reports `syntax error` on `LAB_EXAMPLE` | add `-I include` so the macro can be expanded |
@@ -291,14 +293,17 @@ docker push DOCKER_USERNAME/cpp-lab
 ## 13. Evaluating the executable
 
 ```bash
-size ./build/bin/cpp_lab_project
+size ./build/bin/cpp_bytes
 ```
 
 ```
    text    data     bss     dec     hex filename
- xxxxxx    xxxx    xxxx  xxxxxx   xxxxx ./build/bin/cpp_lab_project
+ xxxxxx    xxxx    xxxx  xxxxxx   xxxxx ./build/bin/cpp_bytes
 ```
 
 - `.text`: executable code, including inlined and template code, constants and string literals
 - `.data`: initialized global and static variables
 - `.bss`: uninitialized global and static variables
+
+---
+EOF

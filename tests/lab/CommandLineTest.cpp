@@ -85,7 +85,7 @@ TEST(AppModeTest, RoundTripsThroughStrings) {
 }
 
 TEST(UsageTest, MentionsEveryCommand) {
-  const std::string text = lab::usage("cpp_lab_project");
+  const std::string text = lab::usage("cpp_bytes");
   for (const char* option : {"--list", "--run", "--run-all", "--list-ids",
                              "--plain", "--mode", "--version", "--help"}) {
     EXPECT_NE(text.find(option), std::string::npos) << option;

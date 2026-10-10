@@ -1,8 +1,8 @@
-# CPP Lab Docs
+# cpp-bytes Docs
 
 Every folder below `src/` is a group in the lab's menu. The README in each folder explains the
 topic, and the examples next to it show it in code. Run any example with
-`./build/bin/cpp_lab_project --run <id>`, or browse them with the interactive menu.
+`./build/bin/cpp_bytes --run <id>`, or browse them with the interactive menu.
 
 - [Learning path](learning-path.md): a suggested order through the examples
 - [Adding examples](adding-examples.md): how the lab works and how to add your own examples

@@ -17,7 +17,7 @@ add_library(dp_visitor
 add_library(dp::visitor ALIAS dp_visitor)
 
 target_link_libraries(dp_visitor
-	PRIVATE cpplab::lab
+	PRIVATE cppbytes::lab
 )
 
 target_include_directories(dp_visitor

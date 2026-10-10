@@ -15,7 +15,7 @@ add_library(dp_state
 add_library(dp::state ALIAS dp_state)
 
 target_link_libraries(dp_state
-	PRIVATE cpplab::lab
+	PRIVATE cppbytes::lab
 )
 
 target_include_directories(dp_state

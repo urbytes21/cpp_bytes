@@ -1,5 +1,5 @@
 # ---------------------------------------------------------------------------
-# Doxygen configuration for cpp-lab.
+# Doxygen configuration for cpp-bytes.
 #
 # CMake turns this file into build/Doxyfile (see cmake/Docs.cmake), so the
 # @VAR@ placeholders below are filled in with real paths. Only the settings

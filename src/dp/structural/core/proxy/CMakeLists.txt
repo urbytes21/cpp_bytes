@@ -11,7 +11,7 @@ add_library(dp_proxy
 add_library(dp::proxy ALIAS dp_proxy)
 
 target_link_libraries(dp_proxy
-	PRIVATE cpplab::lab
+	PRIVATE cppbytes::lab
 )
 
 target_include_directories(dp_proxy

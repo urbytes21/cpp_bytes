@@ -7,7 +7,7 @@ find_package(Threads REQUIRED)
 # ----------------------------------------------------------------------------------------
 # Dependencies - GoogleTest (only needed for the unit tests)
 # ----------------------------------------------------------------------------------------
-if(CPPLAB_BUILD_TESTS)
+if(CPPBYTES_BUILD_TESTS)
     # FetchContent allows downloading dependencies at configure time
     include(FetchContent)
 
@@ -30,9 +30,9 @@ endif()
 # ----------------------------------------------------------------------------------------
 # Dependencies - GTK4 / gtkmm-4.0 (optional, only for the apps in src/ap)
 # ----------------------------------------------------------------------------------------
-set(CPPLAB_GUI_ENABLED OFF)
+set(CPPBYTES_GUI_ENABLED OFF)
 
-if(NOT CPPLAB_BUILD_GUI STREQUAL "OFF")
+if(NOT CPPBYTES_BUILD_GUI STREQUAL "OFF")
     # Use the package PkgConfig to detect GTK+ headers/library files
     find_package(PkgConfig QUIET)
     if(PkgConfig_FOUND)
@@ -41,10 +41,10 @@ if(NOT CPPLAB_BUILD_GUI STREQUAL "OFF")
     endif()
 
     if(GTKMM_FOUND)
-        set(CPPLAB_GUI_ENABLED ON)
+        set(CPPBYTES_GUI_ENABLED ON)
         message(STATUS "gtkmm-4.0 ${GTKMM_VERSION} found: building the GUI apps in src/ap")
-    elseif(CPPLAB_BUILD_GUI STREQUAL "ON")
-        message(FATAL_ERROR "CPPLAB_BUILD_GUI=ON but gtkmm-4.0 was not found. "
+    elseif(CPPBYTES_BUILD_GUI STREQUAL "ON")
+        message(FATAL_ERROR "CPPBYTES_BUILD_GUI=ON but gtkmm-4.0 was not found. "
                             "Install it with: sudo apt install libgtkmm-4.0-dev")
     else()
         message(STATUS "gtkmm-4.0 not found: skipping the GUI apps in src/ap")

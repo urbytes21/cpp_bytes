@@ -13,7 +13,7 @@ add_library(dp_template_method
 add_library(dp::template_method ALIAS dp_template_method)
 
 target_link_libraries(dp_template_method
-	PRIVATE cpplab::lab
+	PRIVATE cppbytes::lab
 )
 
 target_include_directories(dp_template_method

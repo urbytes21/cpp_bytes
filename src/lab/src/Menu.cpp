@@ -95,7 +95,7 @@ std::string countLabel(std::size_t count) {
 
 void printNode(const MenuNode& node, bool is_root, std::ostream& out) {
   const std::string rule(kRuleWidth, '-');
-  std::string location = "cpp-lab";
+  std::string location = "cpp-bytes";
   if (!node.path.empty()) {
     location += " / ";
     for (const char c : node.path) {
@@ -132,8 +132,8 @@ void printHelp(std::ostream& out) {
          "\"dp/\"\n"
          "  q         quit\n\n"
          "Tip: run examples without the menu, e.g.\n"
-         "  cpp_lab_project --list pointer\n"
-         "  cpp_lab_project --run core/smart_pointer/Weak\n";
+         "  cpp_bytes --list pointer\n"
+         "  cpp_bytes --run core/smart_pointer/Weak\n";
 }
 
 /// Prints the prompt and reads one trimmed line. False when input ended.

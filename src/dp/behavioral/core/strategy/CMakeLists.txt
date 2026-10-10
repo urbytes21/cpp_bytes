@@ -9,7 +9,7 @@ add_library(dp_strategy
 add_library(dp::strategy ALIAS dp_strategy)
 
 target_link_libraries(dp_strategy
-	PRIVATE cpplab::lab
+	PRIVATE cppbytes::lab
 )
 
 target_include_directories(dp_strategy

@@ -13,7 +13,7 @@ add_library(dp_bridge
 add_library(dp::bridge ALIAS dp_bridge)
 
 target_link_libraries(dp_bridge
-	PRIVATE cpplab::lab
+	PRIVATE cppbytes::lab
 )
 
 target_include_directories(dp_bridge
