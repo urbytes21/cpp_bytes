@@ -14,12 +14,28 @@ add_library(cpplab_dp
 
 add_library(cpplab::dp ALIAS cpplab_dp)
 
+add_subdirectory(behavioral/chain_of_responsibility)
+add_subdirectory(behavioral/command)
+add_subdirectory(behavioral/iterator)
+add_subdirectory(behavioral/mediator)
+add_subdirectory(behavioral/memento)
+add_subdirectory(behavioral/observer)
 add_subdirectory(behavioral/state)
 add_subdirectory(behavioral/strategy)
+add_subdirectory(behavioral/template_method)
+add_subdirectory(behavioral/visitor)
 
 target_link_libraries(cpplab_dp
 	PRIVATE
 		cpplab::lab
+		dp::chain_of_responsibility
+		dp::command
+		dp::iterator
+		dp::mediator
+		dp::memento
+		dp::observer
 		dp::state
 		dp::strategy
+		dp::template_method
+		dp::visitor
 )
