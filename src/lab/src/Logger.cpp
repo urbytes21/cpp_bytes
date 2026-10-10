@@ -18,6 +18,9 @@ constexpr bool kShowLocationByDefault = true;
 #endif
 
 constexpr std::string_view kGreen = "\033[32m";
+constexpr std::string_view kCyan = "\033[36m";
+constexpr std::string_view kYellow = "\033[33m";
+constexpr std::string_view kDim = "\033[2m";
 constexpr std::string_view kBold = "\033[1m";
 constexpr std::string_view kReset = "\033[0m";
 
@@ -89,20 +92,23 @@ void Logger::write(std::string_view message, const std::source_location& loc,
     message.remove_suffix(1);
   }
 
+  // Empty color codes when colors are disabled, so the output stays plain.
+  const auto color = [this](std::string_view code) {
+    return use_color_ ? code : std::string_view{};
+  };
+
   const std::lock_guard<std::mutex> lock(mutex_);
   if (show_location_) {
-    std::cout << '[' << currentTime() << "][" << fileName(loc.file_name())
-              << ':' << loc.line() << ']';
+    std::cout << color(kDim) << '[' << currentTime() << ']' << color(kReset)
+              << color(kCyan) << '[' << fileName(loc.file_name()) << ':'
+              << loc.line() << ']' << color(kReset);
     if (with_function) {
-      std::cout << '[' << loc.function_name() << ']';
+      std::cout << color(kYellow) << '[' << loc.function_name() << ']'
+                << color(kReset);
     }
     std::cout << ' ';
   }
-  if (use_color_) {
-    std::cout << kGreen << message << kReset << '\n';
-  } else {
-    std::cout << message << '\n';
-  }
+  std::cout << color(kGreen) << message << color(kReset) << '\n';
 }
 
 }  // namespace lab
