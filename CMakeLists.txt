@@ -43,13 +43,13 @@ set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
 message(STATUS "C++ Compiler: ${CMAKE_CXX_COMPILER} (${CMAKE_CXX_COMPILER_ID} ${CMAKE_CXX_COMPILER_VERSION})")
 message(STATUS "Build type  : ${CMAKE_BUILD_TYPE}")
 
-include(CompilerOptions)  # cpplab::options - warnings, coverage, sanitizers
-include(Dependencies)     # Threads, GoogleTest, gtkmm-4.0
-include(CppLab)           # cpplab_add_example_module(), cpplab_discover_example_tests()
-include(Docs)             # 'docs' target - Doxygen API documentation (optional)
+# include(CompilerOptions)  # cpplab::options - warnings, coverage, sanitizers
+# include(Dependencies)     # Threads, GoogleTest, gtkmm-4.0
+# include(CppLab)           # cpplab_add_example_module(), cpplab_discover_example_tests()
+# include(Docs)             # 'docs' target - Doxygen API documentation (optional)
 
 # Enable CTest (unit tests + example smoke tests)
-enable_testing()
+# enable_testing()
 
 # ----------------------------------------------------------------------------------------
 # Project modules

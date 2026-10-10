@@ -4,6 +4,7 @@
 #include <mutex>
 #include <source_location>
 #include <string_view>
+#include <sstream>  // IWYU pragma: keep
 
 namespace lab {
 class Logger {
