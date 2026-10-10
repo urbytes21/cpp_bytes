@@ -10,6 +10,7 @@ add_subdirectory(lab)
 add_subdirectory(dp)          # design patterns
 # add_subdirectory(socket)      # POSIX TCP sockets
 add_subdirectory(solid)
+add_subdirectory(algo)
 
 add_executable(${PROJECT_NAME} main.cpp)
 
@@ -21,6 +22,7 @@ target_link_libraries(${PROJECT_NAME}
         # cpplab::core
         "$<LINK_LIBRARY:WHOLE_ARCHIVE,cpplab::dp>"
         "$<LINK_LIBRARY:WHOLE_ARCHIVE,cpplab::solid>"
+        "$<LINK_LIBRARY:WHOLE_ARCHIVE,cpplab::algo>"
         # cpplab::socket
 )
 
