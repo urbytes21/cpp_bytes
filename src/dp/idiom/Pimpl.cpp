@@ -3,7 +3,7 @@
 //
 // DRAFT - a scaffold, not a finished example: it says what this topic should
 // show, but the code is not written yet. Replace outline() with real
-// demonstrations and drop `lab::kDraft` from LAB_EXAMPLE at the bottom.
+// demonstrations and drop `lab::kDraft` from LAB_EXAMPLE at the bottom
 //
 // Planned content:
 //   - class Widget { struct Impl; std::unique_ptr<Impl> impl_; };
@@ -24,7 +24,7 @@
 namespace {
 
 // The same list as in the header comment, so that running the draft shows what
-// is still missing.
+// is still missing
 constexpr std::array<std::string_view, 5> kPlanned{
     "class Widget { struct Impl; std::unique_ptr<Impl> impl_; };",
     "the destructor must be defined where Impl is complete",

@@ -10,20 +10,45 @@ add_library(cpplab_dp
 	${CMAKE_CURRENT_SOURCE_DIR}/behavioral/Strategy.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/behavioral/TemplateMethod.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/behavioral/Visitor.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/creational/AbstractFactory.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/creational/Builder.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/creational/FactoryMethod.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/creational/Prototype.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/creational/Singleton.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/structural/Adapter.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/structural/Bridge.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/structural/Composite.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/structural/Decorator.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/structural/Facade.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/structural/Flyweight.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/structural/Proxy.cpp
 )
 
 add_library(cpplab::dp ALIAS cpplab_dp)
 
-add_subdirectory(behavioral/chain_of_responsibility)
-add_subdirectory(behavioral/command)
-add_subdirectory(behavioral/iterator)
-add_subdirectory(behavioral/mediator)
-add_subdirectory(behavioral/memento)
-add_subdirectory(behavioral/observer)
-add_subdirectory(behavioral/state)
-add_subdirectory(behavioral/strategy)
-add_subdirectory(behavioral/template_method)
-add_subdirectory(behavioral/visitor)
+add_subdirectory(behavioral/core/chain_of_responsibility)
+add_subdirectory(behavioral/core/command)
+add_subdirectory(behavioral/core/iterator)
+add_subdirectory(behavioral/core/mediator)
+add_subdirectory(behavioral/core/memento)
+add_subdirectory(behavioral/core/observer)
+add_subdirectory(behavioral/core/state)
+add_subdirectory(behavioral/core/strategy)
+add_subdirectory(behavioral/core/template_method)
+add_subdirectory(behavioral/core/visitor)
+
+add_subdirectory(creational/core/abstract_factory)
+add_subdirectory(creational/core/builder)
+add_subdirectory(creational/core/factory_method)
+add_subdirectory(creational/core/prototype)
+add_subdirectory(creational/core/singleton)
+add_subdirectory(structural/core/adapter)
+add_subdirectory(structural/core/bridge)
+add_subdirectory(structural/core/composite)
+add_subdirectory(structural/core/decorator)
+add_subdirectory(structural/core/facade)
+add_subdirectory(structural/core/flyweight)
+add_subdirectory(structural/core/proxy)
 
 target_link_libraries(cpplab_dp
 	PRIVATE
@@ -38,4 +63,16 @@ target_link_libraries(cpplab_dp
 		dp::strategy
 		dp::template_method
 		dp::visitor
+		dp::abstract_factory
+		dp::builder
+		dp::factory_method
+		dp::prototype
+		dp::singleton
+		dp::adapter
+		dp::bridge
+		dp::composite
+		dp::decorator
+		dp::facade
+		dp::flyweight
+		dp::proxy
 )
