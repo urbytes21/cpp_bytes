@@ -25,6 +25,22 @@ cmake --build build -j
 ./build/bin/cpp_lab_project --help    # command line
 ```
 
+### Quick scratch debugging
+
+Paste a standalone program with its own `main()` into `src/debug.cpp`. In VS Code,
+select **(gdb) Scratch Debug (src/debug.cpp)** and press F5. The launch builds only
+`scratch_debug` in Debug mode and stops at entry so you can step through the code.
+
+You can also build and run it from a terminal:
+
+```bash
+cmake -S . -B build/debug -DCMAKE_BUILD_TYPE=Debug
+cmake --build build/debug --target scratch_debug
+./build/debug/bin/scratch_debug
+```
+
+The scratch target is excluded from normal builds and does not link the lab examples.
+
 **Project hierarchy**
 
 ```

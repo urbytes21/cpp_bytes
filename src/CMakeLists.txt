@@ -14,6 +14,7 @@ add_subdirectory(algo)
 add_subdirectory(container)
 
 add_executable(${PROJECT_NAME} main.cpp)
+add_executable(scratch_debug EXCLUDE_FROM_ALL debug.cpp)
 
 # NOTE: forces the .o into the executable by using <WHOLE_ARCHIVE>
 # to let its static initialization executes
