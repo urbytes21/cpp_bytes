@@ -18,7 +18,7 @@ LAB_EXAMPLE("Array", "std::array: initialize, access, update, traverse") {
   LOG_SECTION("Initialize");
 
   // generic lamba
-  auto traversal = [](auto& array) {
+  auto traversal = [](const auto& array) {
     for (const auto& value : array) {
       LOG_S(value);
     }

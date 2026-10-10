@@ -17,7 +17,7 @@
 LAB_EXAMPLE("Queue", "std::queue: insert, access, pop, traverse") {
   std::queue<int> values;
 
-  auto traversal = [](std::queue<int>& queue) {
+  auto traversal = [](const std::queue<int>& queue) {
     auto copy = queue;
     while (!copy.empty()) {
       LOG_S(copy.front());

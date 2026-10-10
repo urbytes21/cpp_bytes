@@ -13,7 +13,11 @@
             ],
             "dependsOn": "CMake Debug Configure",
             "problemMatcher": "$gcc",
-            "group": "build"
+            "group": "build",
+            "presentation": {
+                "reveal": "always",
+                "revealProblems": "onProblem"
+            }
         },
         {
             "label": "CMake Debug Configure",
@@ -26,7 +30,10 @@
                 "${workspaceFolder}/build/debug",
                 "-DCMAKE_BUILD_TYPE=Debug"
             ],
-            "problemMatcher": []
+            "problemMatcher": [],
+            "presentation": {
+                "reveal": "always"
+            }
         },
         {
             "label": "CMake Debug Build",
@@ -41,7 +48,8 @@
                 "isDefault": true
             },
             "presentation": {
-                "reveal": "always"
+                "reveal": "always",
+                "revealProblems": "onProblem"
             },
             "dependsOn": "CMake Debug Configure",
             "problemMatcher": "$gcc"

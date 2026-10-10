@@ -72,7 +72,7 @@ class SimulatedTemperature final : public TemperatureSource {
 void sample_and_report(TemperatureSource& source) {
   auto reading = source.read();
   if (reading) {
-    LOG("message");
+    LOG_S("message: " << reading->value);
   }
 }
 }  // namespace s

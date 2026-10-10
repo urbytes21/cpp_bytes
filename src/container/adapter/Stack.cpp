@@ -19,7 +19,7 @@
 LAB_EXAMPLE("Stack", "std::stack: insert, access, pop, traverse") {
   std::stack<int> values;
 
-  auto traversal = [](std::stack<int>& stack) {
+  auto traversal = [](const std::stack<int>& stack) {
     auto copy = stack;
     while (!copy.empty()) {
       LOG_S(copy.top());
