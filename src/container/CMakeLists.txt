@@ -13,7 +13,7 @@ add_library(cpplab_container
     # unordered/UnorderedSet.cpp
 
     # adapter/FlatMap.cpp
-    # adapter/PriorityQueue.cpp
+    adapter/PriorityQueue.cpp
     adapter/Queue.cpp
     adapter/Stack.cpp
 )
