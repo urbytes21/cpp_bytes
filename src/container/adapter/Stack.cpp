@@ -1,78 +1,51 @@
 // -----------------------------------------------------------------------------
 // std::stack - last in, first out (LIFO)
 //
-//   template<class T, class Container = std::deque<T>> class stack;
-//
-// A container ADAPTER over std::deque (default), std::vector or std::list.
-// push() and pop() work on the "top" (the back of the underlying container),
-// top() reads it. There are no iterators.
-//
-// Typical uses: undo history, expression evaluation, depth-first search.
-//
+//   - Access: top();
+//   - Add: push() / emplace()
+//   - Remove: pop()
+//   - Size: size() / empty(); no iterators or indexing
+//   - Check empty() before accessing or popping an element
+//   - Traversal: create a temporary clone/copy of the stack and perform the pop-and-process
 // Reference: https://en.cppreference.com/w/cpp/container/stack
 // -----------------------------------------------------------------------------
 
+#include <ios>
 #include <stack>
-#include <string>
-#include <vector>
 
 #include "lab/Example.h"
 #include "lab/Logger.h"
 
-namespace {
+LAB_EXAMPLE("Stack", "std::stack: insert, access, pop, traverse") {
+  std::stack<int> values;
 
-void basics() {
-  LOG_SECTION("push / pop / top");
-  std::stack<int> stack;
-
-  for (int value = 0; value < 4; ++value) {
-    stack.push(value);  // bottom -> top: 0 1 2 3
-  }
-  LOG_S("size = " << stack.size() << ", top = " << stack.top());
-
-  stack.pop();  // removes 3
-  LOG_S("after pop(): top = " << stack.top());
-
-  std::string drained;
-  while (!stack.empty()) {
-    drained += std::to_string(stack.top()) + " ";
-    stack.pop();
-  }
-  LOG_S("drained in LIFO order: " << drained);
-}
-
-/// Classic stack use case: are the brackets balanced?
-bool isBalanced(const std::string& text) {
-  std::stack<char, std::vector<char>> open;  // stack on top of std::vector
-  for (const char c : text) {
-    if (c == '(' || c == '[' || c == '{') {
-      open.push(c);
-    } else if (c == ')' || c == ']' || c == '}') {
-      char expected = '(';
-      if (c == ']') {
-        expected = '[';
-      } else if (c == '}') {
-        expected = '{';
-      }
-      if (open.empty() || open.top() != expected) {
-        return false;
-      }
-      open.pop();
+  auto traversal = [](std::stack<int>& stack) {
+    auto copy = stack;
+    while (!copy.empty()) {
+      LOG_S(copy.top());
+      copy.pop();
     }
+  };
+
+  LOG_SECTION("Push and emplace");
+  values.push(1);
+  values.push(2);
+  values.emplace(3);
+  LOG_S("size = " << values.size() << ", top = " << values.top());
+  traversal(values);
+
+  LOG_SECTION("Pop");
+  values.pop();
+  LOG_S("after pop: top = " << values.top());
+
+  LOG_SECTION("Traverse a copy by popping");
+  traversal(values);
+  LOG_S("original size = " << values.size());
+
+  LOG_SECTION("Drain the original");
+  while (!values.empty()) {
+    LOG_S(values.top());
+    values.pop();
   }
-  return open.empty();
-}
-
-void balancedBrackets() {
-  LOG_SECTION("Use case: balanced brackets");
-  for (const std::string text : {"{[()()]}", "([)]", "((())"}) {
-    LOG_S(text << " -> " << (isBalanced(text) ? "balanced" : "not balanced"));
-  }
-}
-
-}  // namespace
-
-LAB_EXAMPLE("Stack", "std::stack: LIFO container adapter") {
-  basics();
-  balancedBrackets();
+  LOG_S("empty = " << std::boolalpha << values.empty());
 }
