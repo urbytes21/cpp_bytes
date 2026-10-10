@@ -32,14 +32,20 @@ void logString(std::string_view label, const std::string& text) {
 
 void create() {
   LOG_SECTION("Creating strings");
+
   const std::string literal = "string 1";
+
   const std::string constructed("string 2");
+
   const std::string repeated(5, 's');
+
   const std::string joined =
       "First "
       "Second";  // adjacent literals are joined at compile time
+
   const std::string raw = R"(C:\folder\file.txt)";  // raw literal: no escaping
-  const std::string part(literal, 0, 6);            // substring constructor
+
+  const std::string part(literal, 0, 6);  // substring constructor
 
   logString("literal    ", literal);
   logString("constructed", constructed);
@@ -51,7 +57,9 @@ void create() {
 
 void modify() {
   LOG_SECTION("Modifying");
+
   std::string name = "Phong";
+
   name.append(" Nguyen");  // "Phong Nguyen"
   name.insert(6, "Van ");  // "Phong Van Nguyen"
   logString("append + insert", name);
@@ -71,6 +79,7 @@ void modify() {
   logString("toupper        ", name);
 
   std::string padded = "   Hello World   ";
+
   padded.erase(0, padded.find_first_not_of(" \t"));  // trim left
   padded.erase(padded.find_last_not_of(" \t") + 1);  // trim right
   logString("trimmed        ", padded);
@@ -78,6 +87,7 @@ void modify() {
 
 void search() {
   LOG_SECTION("Searching and substrings");
+
   const std::string text = "PhongNguyen";
 
   if (const std::size_t position = text.find('N');
@@ -85,25 +95,39 @@ void search() {
     LOG_S("find('N')        -> " << position << ", substr(" << position
                                  << ") = \"" << text.substr(position) << "\"");
   }
+
   LOG_S("find(\"ong\")      -> " << text.find("ong"));
+
   LOG_S("rfind('n')       -> " << text.rfind('n') << " (search from the end)");
+
   LOG_S("find('z') == npos -> " << std::boolalpha
                                 << (text.find('z') == std::string::npos));
+
   LOG_S("starts_with(\"Phong\") = "
         << std::boolalpha << text.starts_with("Phong")
         << ", ends_with(\"yen\") = " << text.ends_with("yen"));
+
+  // get relative path
+  std::string path = "/root/config";
+  auto pos = path.find_last_of("/\\");
+  LOG_S("find_last_of(\"/\\\\\") in: " << path << " at " << pos);
+  std::string r_path = path.erase(pos + 1);
+  LOG_S("path.erase(pos+1) :" << r_path);
 }
 
 void compareAndConvert() {
   LOG_SECTION("Comparing and converting");
+
   const std::string a = "apple";
   const std::string b = "banana";
+
   LOG_S(std::boolalpha << "a == \"apple\" " << (a == "apple") << ", a < b "
                        << (a < b) << ", a.compare(b) = " << a.compare(b));
 
   LOG_S("std::stoi(\"42\") = "
         << std::stoi("42") << ", std::stod(\"3.5\") = " << std::stod("3.5")
         << ", std::to_string(999) = \"" << std::to_string(999) << "\"");
+
   try {
     [[maybe_unused]] const int parsed = std::stoi("not a number");
   } catch (const std::invalid_argument&) {
@@ -113,35 +137,44 @@ void compareAndConvert() {
 
 void split() {
   LOG_SECTION("Splitting on a delimiter");
+
   std::istringstream stream("a,b,c");
   std::vector<std::string> parts;
+
   for (std::string item; std::getline(stream, item, ',');) {
     parts.push_back(item);
   }
+
   LOG_S("\"a,b,c\" -> " << parts.size() << " parts: " << parts[0] << " "
                         << parts[1] << " " << parts[2]);
 }
 
-std::size_t countVowels(
-    std::string_view text) {  // accepts literals and strings without copies
-  return static_cast<std::size_t>(
-      std::count_if(text.begin(), text.end(), [](char c) {
-        return std::string_view("aeiouAEIOU").find(c) != std::string_view::npos;
-      }));
-}
-
 void stringView() {
   LOG_SECTION("std::string_view");
+
+  // accepts literals and strings without copies
+  auto count_vowels = [](std::string_view text) {
+    return static_cast<std::size_t>(
+        std::count_if(text.begin(), text.end(), [](char c) {
+          return std::string_view("aeiouAEIOU").find(c) !=
+                 std::string_view::npos;
+        }));
+  };
+
   const std::string owned = "Hello, string_view";
   const std::string_view view = owned;  // no copy
-  std::string_view word =
-      view.substr(0, 5);  // substr of a view is a view, still no copy
 
-  LOG_S("countVowels(owned) = " << countVowels(owned)
+  // substr of a view is a view, still no copy
+  std::string_view word = view.substr(0, 5);
+
+  LOG_S("countVowels(owned) = " << count_vowels(owned)
                                 << ", countVowels(\"literal\") = "
-                                << countVowels("literal"));
+                                << count_vowels("literal"));
+
   LOG_S("view.substr(0, 5) = " << word);
+
   word.remove_prefix(1);
+
   LOG_S("after remove_prefix(1): "
         << word << " (the string itself is unchanged: " << owned << ")");
 
