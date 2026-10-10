@@ -1,6 +1,7 @@
 add_library(cpplab_algo
 	${CMAKE_CURRENT_SOURCE_DIR}/iteration.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/recursion.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/linkedlist.cpp
 )
 
 add_library(cpplab::algo ALIAS cpplab_algo)

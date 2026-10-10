@@ -39,10 +39,28 @@ std::string nested_loop(const int n) {
   return res.str();
 }
 
+int count_register(int n) {
+  int res = 0;
+
+  // for (int i = 0; i < sizeof(n) * 8; ++i) {
+  //   if (((n >> i) & 0x1) == 1) {
+  //     res++;
+  //   }
+  // }
+
+  while (n != 0) {
+    n &= (n - 1);  // clear the lowest set bit
+    ++res;
+  }
+
+  return res;
+}
+
 }  // namespace
 
 LAB_EXAMPLE("Iteration", "") {
   LOG_S("sum 0 -> 100 = " << for_loop(10));
   LOG_S("sum 0 -> 100 = " << while_loop(10));
   LOG_S("Traversal " << nested_loop(4));
+  LOG_S("Count 1s " << count_register(0b0111));
 }
